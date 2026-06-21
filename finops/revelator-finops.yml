@@ -1,0 +1,112 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Revelator
+providerId: revelator
+created: '2026-06-21'
+modified: '2026-06-21'
+reconciled: false
+tags:
+- Music
+- Distribution
+- Rights
+- Royalties
+- Payments
+- Analytics
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of Revelator spend. Revelator is a sales-led subscription SaaS
+  platform; API access is bundled into platform plans rather than billed as
+  metered API usage. The primary cost driver is the monthly subscription tier,
+  with reported add-ons such as white-label customization, a revenue commission
+  when using Revelator's own DSP deals, and per-track/per-delivery fees for
+  premium formats (e.g. Dolby Atmos). Specific rates are sales-led and not
+  reconciled here.
+notes: >-
+  Pricing is not published as official API pricing and cost figures come from
+  third-party sources; verify directly with Revelator. reconciled is false.
+sources:
+- https://www.revelator.com/pricing/revelator-api
+- https://revelator.com/product/revelator-api
+- https://api-docs.revelator.com
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Revelator
+serviceCategory: Media and Entertainment
+billingModel:
+  pricingCategory: Subscription
+  billingFrequency: Monthly
+  billingCurrency: USD
+  chargeCategories:
+  - Purchase
+  - Usage
+  - Adjustment
+focusColumns:
+  ServiceName: Revelator
+  ServiceCategory: Media and Entertainment
+  ProviderName: Revelator
+  PublisherName: Revelator
+  InvoiceIssuerName: Revelator
+  BillingCurrency: USD
+  ChargeCategory: Purchase
+  PricingCategory: Subscription
+meters:
+- name: platform_subscription
+  description: Monthly platform subscription tier (Launch / Growth / Scale / Enterprise) that bundles API access. Primary cost driver.
+  unit: months
+  aggregation: sum
+  dimensions:
+  - account
+  - tier
+- name: royalty_processing_volume
+  description: Monthly royalty value processed; tiers cap or scale by processing volume.
+  unit: currency
+  aggregation: sum
+  dimensions:
+  - account
+  - tier
+- name: track_ingestion
+  description: Tracks ingested; batch sizes scale by tier.
+  unit: tracks
+  aggregation: sum
+  dimensions:
+  - account
+  - tier
+- name: white_label
+  description: Optional white-label / branded-portal customization add-on.
+  unit: months
+  aggregation: sum
+  dimensions:
+  - account
+- name: dsp_revenue_commission
+  description: Revenue commission reportedly charged when distributing via Revelator's own DSP deals rather than client-managed deals.
+  unit: percent
+  aggregation: sum
+  dimensions:
+  - account
+- name: premium_format_delivery
+  description: Per-track and per-delivery fees for premium formats such as Dolby Atmos.
+  unit: deliveries
+  aggregation: sum
+  dimensions:
+  - account
+  - format
+principles:
+- name: Visibility
+  description: Track the platform subscription tier and any add-ons (white-label, premium formats, DSP commission) as the main spend lines; reconcile against Revelator invoices.
+- name: Allocation
+  description: Map child accounts / enterprises and API keys to internal cost centers, labels, or partner clients.
+- name: Optimization
+  description: Right-size the subscription tier to actual royalty-processing and ingestion volume; use client-managed DSP deals where the revenue commission outweighs convenience; limit premium-format deliveries to where they add value.
+- name: Accountability
+  description: Assign an owner for the Revelator relationship; review tier fit and add-on charges against budget on each billing cycle.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

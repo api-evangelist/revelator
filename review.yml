@@ -1,0 +1,92 @@
+aid: revelator
+name: Revelator
+review:
+  question: Does Revelator expose a documented public WebSocket API?
+  answer: false
+  date: '2026-06-21'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No event-driven, streaming, Server-Sent Events (SSE), or WebSocket
+    surface is documented for the Revelator API. The platform exposes a
+    request/response REST API only, so no AsyncAPI document was authored.
+findings:
+  summary: |
+    Revelator does not publish a documented public WebSocket API. The
+    developer documentation at api-docs.revelator.com describes a
+    request/response RESTful HTTPS API under https://api.revelator.com,
+    authenticated with an 8-hour Bearer access token obtained from the
+    partner login endpoints and governed by a child-account permission
+    model. Distribution, catalog, analytics/trends, royalty accounting,
+    financial reporting, payments (Tipalti), and royalty-token (Web3)
+    operations are all delivered over REST. No realtime, push, webhook,
+    SSE, or WebSocket (ws:// or wss://) transport is documented.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.revelator.com
+      documented: true
+    - protocol: SSE
+      scheme: https
+      documented: false
+      note: No Server-Sent Events streaming endpoint is documented.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented in Revelator's API reference for distribution, analytics, accounting, payments, or any other product area as of the review date.
+  endpointsConfirmedRest:
+    - POST https://api.revelator.com/partner/account/signup
+    - POST https://api.revelator.com/partner/account/login
+    - POST https://api.revelator.com/partner/account/upgrade
+    - POST https://api.revelator.com/account/login/as
+    - GET  https://api.revelator.com/account/permissions
+    - GET  https://api.revelator.com/enterprise/clients/{enterpriseId}
+    - GET  https://api.revelator.com/common/lookup/{type}
+    - POST https://api.revelator.com/distribution/release/{releaseId}/validate
+    - POST https://api.revelator.com/content/release/retail/save
+    - POST https://api.revelator.com/distribution/release/addtoqueue
+    - GET  https://api.revelator.com/distribution/release/all
+    - GET  https://api.revelator.com/distribution/store/all
+    - POST https://api.revelator.com/distribution/release/takedown
+    - GET  https://api.revelator.com/analytics/{dataSet}/{aggregationDimension}
+    - GET  https://api.revelator.com/analytics/revenue/metricsByDate
+    - GET  https://api.revelator.com/analytics/{metric}/{aggregation}
+    - GET  https://api.revelator.com/analytics/artificialStreams/{aggregation}
+    - GET  https://api.revelator.com/analytics/artificialStreams/dashboard/byClient
+    - GET  https://api.revelator.com/analytics/playlists/byMetadata
+    - POST https://api.revelator.com/accounting/contract/save
+    - GET  https://api.revelator.com/accounting/contracts
+    - GET  https://api.revelator.com/accounting/contracts/{contractId}
+    - GET  https://api.revelator.com/accounting/payee/{payeeId}
+    - POST https://api.revelator.com/accounting/payee/save
+    - POST https://api.revelator.com/integrations/tipalti/generateIframeHashkey
+    - GET  https://api.revelator.com/finance/salereport/all
+    - GET  https://api.revelator.com/finance/salereport/{statementId}
+    - GET  https://api.revelator.com/finance/salereport/download/summary
+    - GET  https://api.revelator.com/finance/salereport/download/details
+    - POST https://api.revelator.com/finance/salereport/post-download
+    - GET  https://api.revelator.com/royaltyTokens
+    - POST https://api.revelator.com/royaltyTokens
+    - GET  https://api.revelator.com/royaltyTokens/{tokenId}
+sources:
+  - url: https://api-docs.revelator.com/en/getting-started
+    type: Documentation
+    note: Describes REST base host api.revelator.com, Bearer access tokens (8-hour validity), and the child-account model; no WebSocket mentioned.
+  - url: https://api-docs.revelator.com/en/distribution/
+    type: APIReference
+    note: All documented distribution endpoints are HTTPS REST.
+  - url: https://api-docs.revelator.com/en/analytics/
+    type: APIReference
+    note: Analytics/trends endpoints are HTTPS REST GET requests; no streaming transport.
+  - url: https://api-docs.revelator.com/en/royalty-tokens/
+    type: APIReference
+    note: Royalty-token (Web3) endpoints are HTTPS REST; on-chain settlement is separate from the API transport.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket or other event-driven protocol surface exists in Revelator's
+    documentation. The API is request/response REST only, so no AsyncAPI
+    document was created. apis.yml records the documented REST surface across
+    Distribution, Catalog, Analytics, Royalties/Accounting, and
+    Payments/Wallet.

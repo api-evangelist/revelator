@@ -1,0 +1,60 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Revelator
+providerId: revelator
+created: '2026-06-21'
+modified: '2026-06-21'
+reconciled: false
+tags:
+- Music
+- Distribution
+- Rights
+- Royalties
+- Payments
+- Analytics
+- Rate Limiting
+- Quotas
+- Throttling
+description: >-
+  Revelator's developer documentation does not publish specific numeric API
+  rate limits, quotas, or throttling thresholds. Access is governed by an
+  8-hour access token obtained from the partner login endpoints, a child-account
+  permission model, and partner-level API keys. Practical limits are expected to
+  be governed by subscription tier and partner agreement. No per-endpoint
+  RPM/RPS/quota values are documented; values here are not reconciled.
+notes: >-
+  No numeric rate limits are documented on api-docs.revelator.com. Confirm any
+  throttling, quota, and burst limits directly with Revelator during
+  onboarding. reconciled is false.
+sources:
+- https://api-docs.revelator.com/en/getting-started
+- https://api-docs.revelator.com
+responseCodes:
+  throttled: 429
+limits:
+- name: Access Token Lifetime
+  scope: account
+  metric: duration
+  limit: 8 hours
+  notes: Access tokens obtained from /partner/account/login are valid for 8 hours and must be refreshed thereafter.
+- name: API Rate Limit
+  scope: account
+  metric: requests
+  limit: see provider documentation
+  notes: No numeric per-endpoint or per-account request rate limit is published; governed by partner agreement and tier.
+- name: Ingestion Volume
+  scope: account
+  metric: tracks
+  limit: see plan
+  notes: Track-ingestion batch sizes vary by subscription tier per third-party sources; not an API rate limit and not reconciled.
+policies:
+- name: Token-Based Access
+  description: Most endpoints require a Bearer access token; some administrative endpoints use the partner API key directly. Keep API keys server-side.
+- name: Child-Account Model
+  description: Access scope and permitted operations are governed by the child-account permission model; some operations (e.g. contract changes) require a parent account token.
+- name: Backoff Strategy
+  description: Clients should implement exponential backoff with jitter and honor Retry-After on 429 responses.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

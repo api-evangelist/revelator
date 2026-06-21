@@ -1,0 +1,527 @@
+{
+  "info": {
+    "name": "Revelator API",
+    "description": "Revelator music distribution and rights, royalties, and payments REST API. Authenticated with a Bearer access token obtained from POST /partner/account/login (valid 8 hours).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.revelator.com",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Account",
+      "item": [
+        {
+          "name": "Create a child account and user.",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/partner/account/signup",
+              "host": ["{{baseUrl}}"],
+              "path": ["partner", "account", "signup"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"partnerApiKey\": \"<string>\",\n  \"email\": \"<string>\",\n  \"name\": \"<string>\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "description": "Creates a new child (enterprise) account and user under the partner."
+          }
+        },
+        {
+          "name": "Authenticate and obtain an access token.",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/partner/account/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["partner", "account", "login"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"<string>\",\n  \"password\": \"<string>\",\n  \"partnerApiKey\": \"<string>\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "description": "Prompted (username/password) or unprompted (partnerUserId) login with partnerApiKey. Returns an access token valid for 8 hours."
+          }
+        },
+        {
+          "name": "Switch context to a different enterprise.",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/account/login/as",
+              "host": ["{{baseUrl}}"],
+              "path": ["account", "login", "as"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"enterpriseId\": \"<string>\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "description": "Switch authentication context to a different enterprise."
+          }
+        },
+        {
+          "name": "Retrieve accessible accounts.",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/account/permissions",
+              "host": ["{{baseUrl}}"],
+              "path": ["account", "permissions"]
+            },
+            "description": "Retrieve the complete list of accessible accounts."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Distribution",
+      "item": [
+        {
+          "name": "Validate release metadata.",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/distribution/release/:releaseId/validate",
+              "host": ["{{baseUrl}}"],
+              "path": ["distribution", "release", ":releaseId", "validate"],
+              "variable": [
+                { "key": "releaseId", "value": "<string>" }
+              ]
+            },
+            "description": "Runs automated validation of release metadata; severity 1 = blocking, 2 = warning."
+          }
+        },
+        {
+          "name": "Configure distribution / retail options.",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/content/release/retail/save",
+              "host": ["{{baseUrl}}"],
+              "path": ["content", "release", "retail", "save"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "description": "Configure sale dates, timezones, monetization policies, territorial availability, and price tiers."
+          }
+        },
+        {
+          "name": "Add a release to the distribution queue.",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/distribution/release/addtoqueue",
+              "host": ["{{baseUrl}}"],
+              "path": ["distribution", "release", "addtoqueue"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"releaseId\": \"<string>\",\n  \"storeIds\": [\"<string>\"]\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "description": "Adds a release to the distribution queue for the specified target DSP/store IDs."
+          }
+        },
+        {
+          "name": "List releases with distribution statuses.",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/distribution/release/all",
+              "host": ["{{baseUrl}}"],
+              "path": ["distribution", "release", "all"]
+            },
+            "description": "Paginated list of releases with per-store distribution statuses."
+          }
+        },
+        {
+          "name": "Distribution status counts across stores.",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/distribution/store/all?releaseId=<string>",
+              "host": ["{{baseUrl}}"],
+              "path": ["distribution", "store", "all"],
+              "query": [
+                { "key": "releaseId", "value": "<string>" }
+              ]
+            },
+            "description": "Distribution status counts across DSPs; per-store detail when releaseId is provided."
+          }
+        },
+        {
+          "name": "Take a release down from stores.",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/distribution/release/takedown",
+              "host": ["{{baseUrl}}"],
+              "path": ["distribution", "release", "takedown"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "description": "Removes a release from one or more specified stores."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Analytics",
+      "item": [
+        {
+          "name": "Aggregated analytics by data set and dimension.",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/analytics/:dataSet/:aggregationDimension?dateGranularity=Monthly&fromDate=2026-01-01&toDate=2026-06-01",
+              "host": ["{{baseUrl}}"],
+              "path": ["analytics", ":dataSet", ":aggregationDimension"],
+              "query": [
+                { "key": "dateGranularity", "value": "Monthly" },
+                { "key": "fromDate", "value": "2026-01-01" },
+                { "key": "toDate", "value": "2026-06-01" }
+              ],
+              "variable": [
+                { "key": "dataSet", "value": "revenue" },
+                { "key": "aggregationDimension", "value": "byCountry" }
+              ]
+            },
+            "description": "Aggregated analytics (e.g. revenue) grouped by dimensions such as byCountry, byTrack, byRelease, byArtist."
+          }
+        },
+        {
+          "name": "Monthly revenue key metrics.",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/analytics/revenue/metricsByDate",
+              "host": ["{{baseUrl}}"],
+              "path": ["analytics", "revenue", "metricsByDate"]
+            },
+            "description": "Monthly revenue analytics with pre-calculated enterprise-level metrics."
+          }
+        },
+        {
+          "name": "Consumption and engagement analytics (V3).",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/analytics/:metric/:aggregation?fromDate=2026-01-01&toDate=2026-06-01",
+              "host": ["{{baseUrl}}"],
+              "path": ["analytics", ":metric", ":aggregation"],
+              "query": [
+                { "key": "fromDate", "value": "2026-01-01" },
+                { "key": "toDate", "value": "2026-06-01" }
+              ],
+              "variable": [
+                { "key": "metric", "value": "consumption" },
+                { "key": "aggregation", "value": "byArtist" }
+              ]
+            },
+            "description": "Consumption and engagement metrics aggregated by various dimensions."
+          }
+        },
+        {
+          "name": "Artificial streaming detection.",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/analytics/artificialStreams/:aggregation",
+              "host": ["{{baseUrl}}"],
+              "path": ["analytics", "artificialStreams", ":aggregation"],
+              "variable": [
+                { "key": "aggregation", "value": "byTrack" }
+              ]
+            },
+            "description": "Detects automated or fraudulent streams aggregated by dimension."
+          }
+        },
+        {
+          "name": "Playlist performance metrics.",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/analytics/playlists/byMetadata?metric=Streams",
+              "host": ["{{baseUrl}}"],
+              "path": ["analytics", "playlists", "byMetadata"],
+              "query": [
+                { "key": "metric", "value": "Streams" }
+              ]
+            },
+            "description": "Playlist-driven performance such as streams, reach, followers, and coverage."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Accounting",
+      "item": [
+        {
+          "name": "Create or update a rights contract.",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/accounting/contract/save",
+              "host": ["{{baseUrl}}"],
+              "path": ["accounting", "contract", "save"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"level\": \"track\",\n  \"payees\": [],\n  \"licensors\": []\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "description": "Create or modify a contract (account/label/artist/release/track level). Full object required; no partial updates."
+          }
+        },
+        {
+          "name": "List contracts.",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/accounting/contracts",
+              "host": ["{{baseUrl}}"],
+              "path": ["accounting", "contracts"]
+            },
+            "description": "Paginated list of contracts with filtering, sorting, and search."
+          }
+        },
+        {
+          "name": "Retrieve a contract by id.",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/accounting/contracts/:contractId",
+              "host": ["{{baseUrl}}"],
+              "path": ["accounting", "contracts", ":contractId"],
+              "variable": [
+                { "key": "contractId", "value": "<string>" }
+              ]
+            },
+            "description": "Detailed contract information including terms, payees, and licensors."
+          }
+        },
+        {
+          "name": "Retrieve payee information.",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/accounting/payee/:payeeId",
+              "host": ["{{baseUrl}}"],
+              "path": ["accounting", "payee", ":payeeId"],
+              "variable": [
+                { "key": "payeeId", "value": "<string>" }
+              ]
+            },
+            "description": "Retrieve complete payee information."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Revenue",
+      "item": [
+        {
+          "name": "List financial reports.",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/finance/salereport/all",
+              "host": ["{{baseUrl}}"],
+              "path": ["finance", "salereport", "all"]
+            },
+            "description": "User Statements (royalty runs) and Sale Reports (raw DSP imports) with filtering."
+          }
+        },
+        {
+          "name": "Retrieve a single statement.",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/finance/salereport/:statementId",
+              "host": ["{{baseUrl}}"],
+              "path": ["finance", "salereport", ":statementId"],
+              "variable": [
+                { "key": "statementId", "value": "<statementTypeId>|<statementId>" }
+              ]
+            },
+            "description": "Retrieve a single statement; id format {statementTypeId}|{statementId}."
+          }
+        },
+        {
+          "name": "Download sale reports as a ZIP archive.",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/finance/salereport/post-download",
+              "host": ["{{baseUrl}}"],
+              "path": ["finance", "salereport", "post-download"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "[\"<statementId>\"]",
+              "options": { "raw": { "language": "json" } }
+            },
+            "description": "Download one or more Sale Reports as a compressed ZIP archive."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Payments & Royalty Tokens",
+      "item": [
+        {
+          "name": "Update a payee payment method.",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/accounting/payee/save",
+              "host": ["{{baseUrl}}"],
+              "path": ["accounting", "payee", "save"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"payeeId\": \"<string>\",\n  \"paymentProviderId\": \"<string>\",\n  \"paymentProviderName\": \"<string>\",\n  \"paymentUserId\": \"<string>\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "description": "Update the payment method for a payee within the Revelator system."
+          }
+        },
+        {
+          "name": "Generate a Tipalti iFrame hashkey.",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/integrations/tipalti/generateIframeHashkey",
+              "host": ["{{baseUrl}}"],
+              "path": ["integrations", "tipalti", "generateIframeHashkey"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "description": "Generate an iFrame hashkey for the Tipalti payee payment-setup flow."
+          }
+        },
+        {
+          "name": "Mint a royalty token.",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/royaltyTokens",
+              "host": ["{{baseUrl}}"],
+              "path": ["royaltyTokens"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"assetType\": \"track\",\n  \"assetId\": \"<string>\",\n  \"totalSupply\": 100,\n  \"smartContractStandard\": \"ERC1155\",\n  \"payoutRate\": 100,\n  \"holders\": [\n    {\n      \"walletAddress\": \"<string>\",\n      \"friendlyName\": \"<string>\",\n      \"balance\": 100\n    }\n  ]\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "description": "Mint an ERC1155 royalty token for a track asset with a holder list and optional payout rate."
+          }
+        },
+        {
+          "name": "List royalty tokens.",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/royaltyTokens",
+              "host": ["{{baseUrl}}"],
+              "path": ["royaltyTokens"]
+            },
+            "description": "Retrieve all royalty tokens for the account with pagination and filtering."
+          }
+        },
+        {
+          "name": "Retrieve a royalty token by id.",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/royaltyTokens/:tokenId",
+              "host": ["{{baseUrl}}"],
+              "path": ["royaltyTokens", ":tokenId"],
+              "variable": [
+                { "key": "tokenId", "value": "<string>" }
+              ]
+            },
+            "description": "Retrieve a specific royalty token by its unique identifier."
+          }
+        }
+      ]
+    }
+  ]
+}

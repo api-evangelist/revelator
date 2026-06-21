@@ -1,0 +1,409 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Revelator API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Account",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a child account and user.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.revelator.com/partner/account/signup",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new child (enterprise) account and user under the partner."
+        },
+        {
+          "info": {
+            "name": "Authenticate and obtain an access token.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.revelator.com/partner/account/login",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Prompted (username/password) or unprompted (partnerUserId) login with partnerApiKey. Returns an access token valid for 8 hours."
+        },
+        {
+          "info": {
+            "name": "Switch context to a different enterprise.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.revelator.com/account/login/as",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Switch authentication context to a different enterprise."
+        },
+        {
+          "info": {
+            "name": "Retrieve accessible accounts.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.revelator.com/account/permissions"
+          },
+          "docs": "Retrieve the complete list of accessible accounts."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Distribution",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Validate release metadata.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.revelator.com/distribution/release/{releaseId}/validate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Runs automated validation of release metadata; severity 1 = blocking, 2 = warning."
+        },
+        {
+          "info": {
+            "name": "Configure distribution / retail options.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.revelator.com/content/release/retail/save",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Configure sale dates, timezones, monetization policies, territorial availability, and price tiers."
+        },
+        {
+          "info": {
+            "name": "Add a release to the distribution queue.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.revelator.com/distribution/release/addtoqueue",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a release to the distribution queue for the specified target DSP/store IDs."
+        },
+        {
+          "info": {
+            "name": "List releases with distribution statuses.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.revelator.com/distribution/release/all"
+          },
+          "docs": "Paginated list of releases with per-store distribution statuses."
+        },
+        {
+          "info": {
+            "name": "Distribution status counts across stores.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.revelator.com/distribution/store/all"
+          },
+          "docs": "Distribution status counts across DSPs; per-store detail when releaseId is provided."
+        },
+        {
+          "info": {
+            "name": "Take a release down from stores.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.revelator.com/distribution/release/takedown",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Removes a release from one or more specified stores."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Analytics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Aggregated analytics by data set and dimension.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.revelator.com/analytics/{dataSet}/{aggregationDimension}"
+          },
+          "docs": "Aggregated analytics (e.g. revenue) grouped by dimensions such as byCountry, byTrack, byRelease, byArtist."
+        },
+        {
+          "info": {
+            "name": "Monthly revenue key metrics.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.revelator.com/analytics/revenue/metricsByDate"
+          },
+          "docs": "Monthly revenue analytics with pre-calculated enterprise-level metrics."
+        },
+        {
+          "info": {
+            "name": "Consumption and engagement analytics (V3).",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.revelator.com/analytics/{metric}/{aggregation}"
+          },
+          "docs": "Consumption and engagement metrics aggregated by various dimensions."
+        },
+        {
+          "info": {
+            "name": "Artificial streaming detection.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.revelator.com/analytics/artificialStreams/{aggregation}"
+          },
+          "docs": "Detects automated or fraudulent streams aggregated by dimension."
+        },
+        {
+          "info": {
+            "name": "Playlist performance metrics.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.revelator.com/analytics/playlists/byMetadata"
+          },
+          "docs": "Playlist-driven performance such as streams, reach, followers, and coverage."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Accounting",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create or update a rights contract.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.revelator.com/accounting/contract/save",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create or modify a contract (account/label/artist/release/track level). Full object required; no partial updates."
+        },
+        {
+          "info": {
+            "name": "List contracts.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.revelator.com/accounting/contracts"
+          },
+          "docs": "Paginated list of contracts with filtering, sorting, and search."
+        },
+        {
+          "info": {
+            "name": "Retrieve a contract by id.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.revelator.com/accounting/contracts/{contractId}"
+          },
+          "docs": "Detailed contract information including terms, payees, and licensors."
+        },
+        {
+          "info": {
+            "name": "Retrieve payee information.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.revelator.com/accounting/payee/{payeeId}"
+          },
+          "docs": "Retrieve complete payee information."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Revenue",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List financial reports.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.revelator.com/finance/salereport/all"
+          },
+          "docs": "User Statements (royalty runs) and Sale Reports (raw DSP imports) with filtering."
+        },
+        {
+          "info": {
+            "name": "Retrieve a single statement.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.revelator.com/finance/salereport/{statementId}"
+          },
+          "docs": "Retrieve a single statement; id format {statementTypeId}|{statementId}."
+        },
+        {
+          "info": {
+            "name": "Download sale reports as a ZIP archive.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.revelator.com/finance/salereport/post-download",
+            "body": {
+              "type": "json",
+              "data": "[]"
+            }
+          },
+          "docs": "Download one or more Sale Reports as a compressed ZIP archive."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Payments & Royalty Tokens",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Update a payee payment method.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.revelator.com/accounting/payee/save",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the payment method for a payee (paymentProviderId, paymentProviderName, paymentUserId)."
+        },
+        {
+          "info": {
+            "name": "Generate a Tipalti iFrame hashkey.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.revelator.com/integrations/tipalti/generateIframeHashkey",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generate an iFrame hashkey for the Tipalti payee payment-setup flow."
+        },
+        {
+          "info": {
+            "name": "Mint a royalty token.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.revelator.com/royaltyTokens",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Mint an ERC1155 royalty token for a track asset with a holder list and optional payout rate."
+        },
+        {
+          "info": {
+            "name": "List royalty tokens.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.revelator.com/royaltyTokens"
+          },
+          "docs": "Retrieve all royalty tokens for the account with pagination and filtering."
+        },
+        {
+          "info": {
+            "name": "Retrieve a royalty token by id.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.revelator.com/royaltyTokens/{tokenId}"
+          },
+          "docs": "Retrieve a specific royalty token by its unique identifier."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

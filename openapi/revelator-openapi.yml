@@ -1,0 +1,803 @@
+openapi: 3.0.1
+info:
+  title: Revelator API
+  description: >-
+    REST API for the Revelator music distribution and rights, royalties, and
+    payments platform. Covers account/catalog management, distribution to DSPs,
+    analytics and trends, royalty accounting and financial reporting, and
+    payments / royalty-token (Web3 wallet) operations. Authentication uses an
+    access token (Bearer) obtained from the partner login endpoints; tokens are
+    valid for 8 hours and must be sent in the Authorization header.
+  termsOfService: https://www.revelator.com/terms
+  contact:
+    name: Revelator Support
+    url: https://api-docs.revelator.com
+  version: '1.0'
+servers:
+  - url: https://api.revelator.com
+    description: Production
+security:
+  - bearerAuth: []
+tags:
+  - name: Account
+    description: Partner account signup, login, switching, and permissions.
+  - name: Lookup
+    description: Common reference/lookup data.
+  - name: Distribution
+    description: Release validation, distribution options, queueing, status, takedown.
+  - name: Analytics
+    description: Revenue, consumption, engagement, playlist, and artificial-streaming analytics.
+  - name: Accounting
+    description: Rights contracts and payee management.
+  - name: Revenue
+    description: Financial sale reports and user statements.
+  - name: Royalty Tokens
+    description: Minting and retrieving ERC1155 royalty tokens.
+  - name: Integrations
+    description: Payment-provider (Tipalti) integration.
+paths:
+  /partner/account/signup:
+    post:
+      operationId: partnerAccountSignup
+      tags:
+        - Account
+      summary: Create a new child account and user.
+      description: Creates a new child (enterprise) account and user under the partner. Authenticated with the partner API key.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignupRequest'
+      responses:
+        '200':
+          description: Account created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthToken'
+  /partner/account/login:
+    post:
+      operationId: partnerAccountLogin
+      tags:
+        - Account
+      summary: Authenticate a user and obtain an access token.
+      description: >-
+        Prompted login uses username/password plus partnerApiKey; unprompted
+        login uses partnerUserId plus partnerApiKey. Returns an access token
+        valid for 8 hours.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Authenticated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthToken'
+  /partner/account/upgrade:
+    post:
+      operationId: partnerAccountUpgrade
+      tags:
+        - Account
+      summary: Upgrade an account type or settings.
+      responses:
+        '200':
+          description: OK
+  /account/login/as:
+    post:
+      operationId: accountLoginAs
+      tags:
+        - Account
+      summary: Switch authentication context to a different enterprise.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthToken'
+  /account/permissions:
+    get:
+      operationId: getAccountPermissions
+      tags:
+        - Account
+      summary: Retrieve the list of accessible accounts.
+      responses:
+        '200':
+          description: OK
+  /enterprise/clients/{enterpriseId}:
+    get:
+      operationId: getEnterpriseClients
+      tags:
+        - Account
+      summary: Retrieve client information for an enterprise.
+      parameters:
+        - name: enterpriseId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+  /distribution/release/{releaseId}/validate:
+    post:
+      operationId: validateRelease
+      tags:
+        - Distribution
+      summary: Validate release metadata.
+      description: Runs automated validation of release metadata, returning errors with severity levels (1 = blocking, 2 = warning).
+      parameters:
+        - name: releaseId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Validation results.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationResult'
+  /content/release/retail/save:
+    post:
+      operationId: saveRetailDistributionOptions
+      tags:
+        - Distribution
+      summary: Configure distribution / retail options.
+      description: Configures distribution settings including sale dates, times, timezones, monetization policies, territorial availability, and price tiers.
+      responses:
+        '200':
+          description: OK
+  /distribution/release/addtoqueue:
+    post:
+      operationId: addReleaseToQueue
+      tags:
+        - Distribution
+      summary: Add a release to the distribution queue.
+      description: Adds a release to the distribution queue, specifying target DSP/store IDs for delivery.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddToQueueRequest'
+      responses:
+        '200':
+          description: OK
+  /distribution/release/all:
+    get:
+      operationId: getAllReleaseDistributionStatus
+      tags:
+        - Distribution
+      summary: List releases with distribution statuses.
+      description: Retrieves a paginated list of releases with distribution statuses per store, supporting filters by artist, label, date ranges, and status.
+      parameters:
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageNumber'
+      responses:
+        '200':
+          description: OK
+  /distribution/store/all:
+    get:
+      operationId: getStoreDistributionStatus
+      tags:
+        - Distribution
+      summary: Distribution status counts across stores.
+      description: Returns distribution status counts across DSPs; includes detailed per-store status when the releaseId parameter is provided.
+      parameters:
+        - name: releaseId
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+  /distribution/release/takedown:
+    post:
+      operationId: takedownRelease
+      tags:
+        - Distribution
+      summary: Take a release down from stores.
+      description: Removes a release from one or more specified stores.
+      responses:
+        '200':
+          description: OK
+  /analytics/{dataSet}/{aggregationDimension}:
+    get:
+      operationId: getAnalytics
+      tags:
+        - Analytics
+      summary: Aggregated analytics by data set and dimension.
+      description: Retrieves aggregated analytics data (e.g. revenue) grouped by a dimension such as byCountry, byTrack, byRelease, byArtist, byLabel, byDistributor, byDeliveryType, byFormat, byYouTubeChannel, or byYouTubeVideo.
+      parameters:
+        - name: dataSet
+          in: path
+          required: true
+          schema:
+            type: string
+            example: revenue
+        - name: aggregationDimension
+          in: path
+          required: true
+          schema:
+            type: string
+            example: byCountry
+        - name: dateGranularity
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [Daily, Monthly, Yearly, All]
+        - $ref: '#/components/parameters/fromDate'
+        - $ref: '#/components/parameters/toDate'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageNumber'
+      responses:
+        '200':
+          description: OK
+  /analytics/revenue/metricsByDate:
+    get:
+      operationId: getRevenueMetricsByDate
+      tags:
+        - Analytics
+      summary: Monthly revenue metrics with pre-calculated enterprise-level values.
+      parameters:
+        - $ref: '#/components/parameters/fromDate'
+        - $ref: '#/components/parameters/toDate'
+        - name: metrics
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+        - name: targetEnterpriseId
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+  /analytics/{metric}/{aggregation}:
+    get:
+      operationId: getConsumptionAnalytics
+      tags:
+        - Analytics
+      summary: V3 consumption and engagement analytics by dimension.
+      description: Provides consumption and engagement metrics aggregated by various dimensions (byArtist, byCountry, byDate, byRelease, byTrack, byDistributor, byLabel, byDeliveryType, byDiscoveryType, byRecordingVersion, bySourceOfStream).
+      parameters:
+        - name: metric
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: [consumption, engagement]
+        - name: aggregation
+          in: path
+          required: true
+          schema:
+            type: string
+            example: byArtist
+        - $ref: '#/components/parameters/fromDateRequired'
+        - $ref: '#/components/parameters/toDateRequired'
+        - name: dateGranularity
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [Daily, Weekly, Monthly, Quarterly, Yearly, All]
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageNumber'
+      responses:
+        '200':
+          description: OK
+  /analytics/artificialStreams/{aggregation}:
+    get:
+      operationId: getArtificialStreams
+      tags:
+        - Analytics
+      summary: Artificial / fraudulent streaming detection by dimension.
+      parameters:
+        - name: aggregation
+          in: path
+          required: true
+          schema:
+            type: string
+            example: byTrack
+        - $ref: '#/components/parameters/fromDate'
+        - $ref: '#/components/parameters/toDate'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageNumber'
+      responses:
+        '200':
+          description: OK
+  /analytics/playlists/byMetadata:
+    get:
+      operationId: getPlaylistAnalytics
+      tags:
+        - Analytics
+      summary: Playlist-driven performance metrics.
+      description: Retrieves playlist performance such as streams from playlists, reach, followers, and coverage.
+      parameters:
+        - name: metric
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [Streams, PlaylistsCount, Followers, TracksCount, All]
+        - name: metadata
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [Distributor, Country, Playlist, PlaylistType]
+        - $ref: '#/components/parameters/fromDate'
+        - $ref: '#/components/parameters/toDate'
+      responses:
+        '200':
+          description: OK
+  /accounting/contract/save:
+    post:
+      operationId: saveContract
+      tags:
+        - Accounting
+      summary: Create or update a rights contract.
+      description: >-
+        Creates or modifies a contract (account, label, artist, release, or
+        track level) with full payee and licensor configuration. Requires a
+        parent account access token. The API does not support partial updates -
+        the full object must be submitted.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Contract'
+      responses:
+        '200':
+          description: OK
+  /accounting/contracts:
+    get:
+      operationId: getContracts
+      tags:
+        - Accounting
+      summary: List contracts.
+      description: Retrieves a paginated list of contracts with filtering, sorting, and search.
+      parameters:
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageNumber'
+      responses:
+        '200':
+          description: OK
+  /accounting/contracts/{contractId}:
+    get:
+      operationId: getContract
+      tags:
+        - Accounting
+      summary: Retrieve a contract by id.
+      parameters:
+        - name: contractId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contract'
+  /accounting/payee/{payeeId}:
+    get:
+      operationId: getPayee
+      tags:
+        - Accounting
+      summary: Retrieve payee information.
+      parameters:
+        - name: payeeId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payee'
+  /accounting/payee/save:
+    post:
+      operationId: savePayee
+      tags:
+        - Integrations
+      summary: Update the payment method for a payee.
+      description: Updates the payment method for a payee within the Revelator system (paymentProviderId, paymentProviderName, paymentUserId).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Payee'
+      responses:
+        '200':
+          description: OK
+  /integrations/tipalti/generateIframeHashkey:
+    post:
+      operationId: generateTipaltiIframeHashkey
+      tags:
+        - Integrations
+      summary: Generate a Tipalti iFrame hashkey for payee setup.
+      description: Generates an iFrame hashkey used to embed the Tipalti payee payment-setup flow. Requires a payee user access token.
+      responses:
+        '200':
+          description: OK
+  /finance/salereport/all:
+    get:
+      operationId: getSaleReports
+      tags:
+        - Revenue
+      summary: List financial reports (user statements and sale reports).
+      description: >-
+        Retrieves User Statements (system-generated during royalty runs) and
+        Sale Reports (raw DSP imports). Supports filtering by date range,
+        release id, track id, store id, payee id, processing status, and
+        approval status.
+      parameters:
+        - $ref: '#/components/parameters/fromDate'
+        - $ref: '#/components/parameters/toDate'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageNumber'
+      responses:
+        '200':
+          description: OK
+  /finance/salereport/{statementId}:
+    get:
+      operationId: getSaleReport
+      tags:
+        - Revenue
+      summary: Retrieve a single statement.
+      description: 'Retrieves a single statement. The statement id uses the format {statementTypeId}|{statementId}.'
+      parameters:
+        - name: statementId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+  /finance/salereport/download/summary:
+    get:
+      operationId: downloadStatementSummary
+      tags:
+        - Revenue
+      summary: Download a user-statement summary (HTML).
+      description: 'Deprecated: effective June 19, 2026 this endpoint will be removed.'
+      deprecated: true
+      responses:
+        '200':
+          description: HTML file.
+          content:
+            text/html:
+              schema:
+                type: string
+  /finance/salereport/download/details:
+    get:
+      operationId: downloadStatementDetails
+      tags:
+        - Revenue
+      summary: Download user-statement details (CSV).
+      responses:
+        '200':
+          description: CSV file.
+          content:
+            text/csv:
+              schema:
+                type: string
+  /finance/salereport/post-download:
+    post:
+      operationId: postDownloadSaleReports
+      tags:
+        - Revenue
+      summary: Download one or more sale reports as a ZIP archive.
+      description: Accepts a JSON array of statement ids and returns a compressed ZIP archive.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+      responses:
+        '200':
+          description: ZIP archive.
+          content:
+            application/zip:
+              schema:
+                type: string
+                format: binary
+  /royaltyTokens:
+    get:
+      operationId: getRoyaltyTokens
+      tags:
+        - Royalty Tokens
+      summary: List royalty tokens.
+      description: Retrieves all royalty tokens for the account, with pagination, filtering by status and date range, and search.
+      parameters:
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageNumber'
+      responses:
+        '200':
+          description: OK
+    post:
+      operationId: mintRoyaltyToken
+      tags:
+        - Royalty Tokens
+      summary: Mint a royalty token.
+      description: >-
+        Mints a new ERC1155 royalty token for a track asset, with a total
+        supply and a holder list (Web3 wallet addresses, friendly names, token
+        balances) and an optional payout rate (1-100%, defaults to 100%). The
+        enterprise smart-wallet address is automatically designated an Admin
+        holder.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoyaltyTokenMintRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoyaltyToken'
+  /royaltyTokens/{tokenId}:
+    get:
+      operationId: getRoyaltyToken
+      tags:
+        - Royalty Tokens
+      summary: Retrieve a royalty token by id.
+      parameters:
+        - name: tokenId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoyaltyToken'
+  /common/lookup/{type}:
+    get:
+      operationId: getLookup
+      tags:
+        - Lookup
+      summary: Retrieve lookup data.
+      description: Retrieves lookup data such as currencies, countries, and stores.
+      parameters:
+        - name: type
+          in: path
+          required: true
+          schema:
+            type: string
+            example: stores
+      responses:
+        '200':
+          description: OK
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: >-
+        Access token obtained from POST /partner/account/login (or
+        /account/login/as), sent as 'Authorization: Bearer <token>'. Tokens are
+        valid for 8 hours.
+  parameters:
+    pageSize:
+      name: pageSize
+      in: query
+      required: false
+      schema:
+        type: integer
+    pageNumber:
+      name: pageNumber
+      in: query
+      required: false
+      schema:
+        type: integer
+    fromDate:
+      name: fromDate
+      in: query
+      required: false
+      schema:
+        type: string
+        format: date
+    toDate:
+      name: toDate
+      in: query
+      required: false
+      schema:
+        type: string
+        format: date
+    fromDateRequired:
+      name: fromDate
+      in: query
+      required: true
+      schema:
+        type: string
+        format: date
+    toDateRequired:
+      name: toDate
+      in: query
+      required: true
+      schema:
+        type: string
+        format: date
+  schemas:
+    AuthToken:
+      type: object
+      properties:
+        access_token:
+          type: string
+        enterpriseId:
+          type: string
+        expiresIn:
+          type: integer
+          description: Token lifetime in seconds (8 hours).
+    LoginRequest:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Email (prompted login).
+        password:
+          type: string
+          description: Password (prompted login).
+        partnerUserId:
+          type: string
+          description: Partner-side user id (unprompted login).
+        partnerApiKey:
+          type: string
+      required:
+        - partnerApiKey
+    SignupRequest:
+      type: object
+      properties:
+        partnerApiKey:
+          type: string
+        email:
+          type: string
+        name:
+          type: string
+      required:
+        - partnerApiKey
+    ValidationResult:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              severity:
+                type: integer
+                description: 1 = blocking, 2 = warning.
+    AddToQueueRequest:
+      type: object
+      properties:
+        releaseId:
+          type: string
+        storeIds:
+          type: array
+          items:
+            type: string
+      required:
+        - releaseId
+        - storeIds
+    Contract:
+      type: object
+      properties:
+        contractId:
+          type: string
+        name:
+          type: string
+        level:
+          type: string
+          enum: [account, label, artist, release, track]
+        active:
+          type: boolean
+        payees:
+          type: array
+          items:
+            $ref: '#/components/schemas/Payee'
+        licensors:
+          type: array
+          items:
+            type: object
+    Payee:
+      type: object
+      properties:
+        payeeId:
+          type: string
+        name:
+          type: string
+        paymentProviderId:
+          type: string
+        paymentProviderName:
+          type: string
+        paymentUserId:
+          type: string
+    RoyaltyTokenMintRequest:
+      type: object
+      properties:
+        assetType:
+          type: string
+          enum: [track]
+        assetId:
+          type: string
+        totalSupply:
+          type: integer
+        smartContractStandard:
+          type: string
+          enum: [ERC1155]
+        payoutRate:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 100
+        holders:
+          type: array
+          items:
+            type: object
+            properties:
+              walletAddress:
+                type: string
+              friendlyName:
+                type: string
+              balance:
+                type: integer
+      required:
+        - assetType
+        - assetId
+        - totalSupply
+        - smartContractStandard
+        - holders
+    RoyaltyToken:
+      type: object
+      properties:
+        tokenId:
+          type: string
+        assetId:
+          type: string
+        totalSupply:
+          type: integer
+        smartContractStandard:
+          type: string
+        status:
+          type: string
+        holders:
+          type: array
+          items:
+            type: object

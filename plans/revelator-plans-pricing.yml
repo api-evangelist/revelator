@@ -1,0 +1,135 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Revelator
+providerId: revelator
+created: '2026-06-21'
+modified: '2026-06-21'
+reconciled: false
+tags:
+- Music
+- Distribution
+- Rights
+- Royalties
+- Payments
+- Analytics
+- Plans
+description: >-
+  Revelator is a sales-led, subscription SaaS platform for labels and
+  distributors; API access is bundled with platform plans rather than sold as a
+  standalone metered API product. There is no public self-service price list or
+  developer free tier published on the developer documentation site. Tier names
+  and prices below are drawn from third-party reviews, not from an official
+  Revelator pricing page, and are NOT reconciled - treat as indicative and
+  confirm directly with Revelator sales.
+notes: >-
+  Pricing is sales-led and not published as official API pricing. The figures
+  here come from a third-party review (musicdistribute.com) and may be outdated
+  or inaccurate. reconciled is false. Contact Revelator for current, accurate
+  terms.
+sources:
+- https://www.revelator.com/pricing/revelator-api
+- https://revelator.com/product/revelator-api
+- https://api-docs.revelator.com
+- https://musicdistribute.com/reviews/revelator/
+plans:
+- id: revelator-launch
+  name: Launch
+  type: subscription
+  description: >-
+    Entry platform tier with API access. Indicative third-party figure: about
+    $249/month, supporting up to ~$25,000 monthly royalty processing and
+    ~3,000-track ingestion batches. Not reconciled.
+  entries:
+  - label: Launch Subscription
+    name: launch
+    type: flat
+    metric: subscription
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: ~$249/month (indicative, unverified)
+    userMultiplied: false
+  elements:
+  - name: Distribution
+  - name: Catalog
+  - name: Analytics
+  - name: Royalty Accounting
+  - name: API Access
+- id: revelator-growth
+  name: Growth
+  type: subscription
+  description: >-
+    Mid platform tier. Indicative third-party figure: about $649/month,
+    expanding ingestion to ~10,000 tracks and adding label-portal functionality
+    and PayPal payout integration. Not reconciled.
+  entries:
+  - label: Growth Subscription
+    name: growth
+    type: flat
+    metric: subscription
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: ~$649/month (indicative, unverified)
+    userMultiplied: false
+  elements:
+  - name: Distribution
+  - name: Label Portal
+  - name: Analytics
+  - name: Royalty Accounting
+  - name: Payouts
+  - name: API Access
+- id: revelator-scale
+  name: Scale
+  type: subscription
+  description: >-
+    Higher platform tier. Indicative third-party figure: about $1,199/month,
+    adding mechanical royalty administration and external revenue-source
+    reporting. Not reconciled.
+  entries:
+  - label: Scale Subscription
+    name: scale
+    type: flat
+    metric: subscription
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: ~$1,199/month (indicative, unverified)
+    userMultiplied: false
+  elements:
+  - name: Mechanical Royalties
+  - name: External Revenue Reporting
+  - name: Analytics
+  - name: API Access
+- id: revelator-enterprise
+  name: Enterprise
+  type: enterprise
+  description: >-
+    Custom enterprise tier with bespoke feature development and dedicated
+    account management. Indicative third-party figure: from about $3,500/month.
+    Optional add-ons reported include white-label customization (~$250/month)
+    and a 5% revenue commission when using Revelator's own DSP deals. Contact
+    Revelator sales for accurate terms. Not reconciled.
+  entries:
+  - label: Enterprise Agreement
+    name: enterprise
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: from ~$3,500/month (contact sales)
+    userMultiplied: false
+  elements:
+  - name: Custom Development
+  - name: Dedicated Account Management
+  - name: White-Label
+  - name: Full API Access
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

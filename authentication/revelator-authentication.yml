@@ -1,0 +1,14 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/revelator-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  description: 'Access token obtained from POST /partner/account/login (or /account/login/as),
+    sent as ''Authorization: Bearer <token>''. Tokens are valid for 8 hours.'
+  sources:
+  - openapi/revelator-openapi.yml

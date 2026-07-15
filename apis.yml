@@ -138,6 +138,8 @@ apis:
     retrieves ERC1155 royalty tokens backed by track assets with Web3 smart-wallet
     holders for on-chain royalty distribution.
 common:
+- type: AgenticAccess
+  url: agentic-access/revelator-agentic-access.yml
 - type: DomainSecurity
   url: security/revelator-domain-security.yml
 - type: Authentication

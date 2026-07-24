@@ -1,0 +1,223 @@
+openapi: 3.0.1
+info:
+  title: Revelator Account Analytics API
+  description: REST API for the Revelator music distribution and rights, royalties, and payments platform. Covers account/catalog management, distribution to DSPs, analytics and trends, royalty accounting and financial reporting, and payments / royalty-token (Web3 wallet) operations. Authentication uses an access token (Bearer) obtained from the partner login endpoints; tokens are valid for 8 hours and must be sent in the Authorization header.
+  termsOfService: https://www.revelator.com/terms
+  contact:
+    name: Revelator Support
+    url: https://api-docs.revelator.com
+  version: '1.0'
+servers:
+- url: https://api.revelator.com
+  description: Production
+security:
+- bearerAuth: []
+tags:
+- name: Analytics
+  description: Revenue, consumption, engagement, playlist, and artificial-streaming analytics.
+paths:
+  /analytics/{dataSet}/{aggregationDimension}:
+    get:
+      operationId: getAnalytics
+      tags:
+      - Analytics
+      summary: Aggregated analytics by data set and dimension.
+      description: Retrieves aggregated analytics data (e.g. revenue) grouped by a dimension such as byCountry, byTrack, byRelease, byArtist, byLabel, byDistributor, byDeliveryType, byFormat, byYouTubeChannel, or byYouTubeVideo.
+      parameters:
+      - name: dataSet
+        in: path
+        required: true
+        schema:
+          type: string
+          example: revenue
+      - name: aggregationDimension
+        in: path
+        required: true
+        schema:
+          type: string
+          example: byCountry
+      - name: dateGranularity
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - Daily
+          - Monthly
+          - Yearly
+          - All
+      - $ref: '#/components/parameters/fromDate'
+      - $ref: '#/components/parameters/toDate'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageNumber'
+      responses:
+        '200':
+          description: OK
+  /analytics/revenue/metricsByDate:
+    get:
+      operationId: getRevenueMetricsByDate
+      tags:
+      - Analytics
+      summary: Monthly revenue metrics with pre-calculated enterprise-level values.
+      parameters:
+      - $ref: '#/components/parameters/fromDate'
+      - $ref: '#/components/parameters/toDate'
+      - name: metrics
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        style: form
+        explode: true
+      - name: targetEnterpriseId
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+  /analytics/{metric}/{aggregation}:
+    get:
+      operationId: getConsumptionAnalytics
+      tags:
+      - Analytics
+      summary: V3 consumption and engagement analytics by dimension.
+      description: Provides consumption and engagement metrics aggregated by various dimensions (byArtist, byCountry, byDate, byRelease, byTrack, byDistributor, byLabel, byDeliveryType, byDiscoveryType, byRecordingVersion, bySourceOfStream).
+      parameters:
+      - name: metric
+        in: path
+        required: true
+        schema:
+          type: string
+          enum:
+          - consumption
+          - engagement
+      - name: aggregation
+        in: path
+        required: true
+        schema:
+          type: string
+          example: byArtist
+      - $ref: '#/components/parameters/fromDateRequired'
+      - $ref: '#/components/parameters/toDateRequired'
+      - name: dateGranularity
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - Daily
+          - Weekly
+          - Monthly
+          - Quarterly
+          - Yearly
+          - All
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageNumber'
+      responses:
+        '200':
+          description: OK
+  /analytics/artificialStreams/{aggregation}:
+    get:
+      operationId: getArtificialStreams
+      tags:
+      - Analytics
+      summary: Artificial / fraudulent streaming detection by dimension.
+      parameters:
+      - name: aggregation
+        in: path
+        required: true
+        schema:
+          type: string
+          example: byTrack
+      - $ref: '#/components/parameters/fromDate'
+      - $ref: '#/components/parameters/toDate'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageNumber'
+      responses:
+        '200':
+          description: OK
+  /analytics/playlists/byMetadata:
+    get:
+      operationId: getPlaylistAnalytics
+      tags:
+      - Analytics
+      summary: Playlist-driven performance metrics.
+      description: Retrieves playlist performance such as streams from playlists, reach, followers, and coverage.
+      parameters:
+      - name: metric
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - Streams
+          - PlaylistsCount
+          - Followers
+          - TracksCount
+          - All
+      - name: metadata
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - Distributor
+          - Country
+          - Playlist
+          - PlaylistType
+      - $ref: '#/components/parameters/fromDate'
+      - $ref: '#/components/parameters/toDate'
+      responses:
+        '200':
+          description: OK
+components:
+  parameters:
+    pageSize:
+      name: pageSize
+      in: query
+      required: false
+      schema:
+        type: integer
+    fromDateRequired:
+      name: fromDate
+      in: query
+      required: true
+      schema:
+        type: string
+        format: date
+    toDate:
+      name: toDate
+      in: query
+      required: false
+      schema:
+        type: string
+        format: date
+    pageNumber:
+      name: pageNumber
+      in: query
+      required: false
+      schema:
+        type: integer
+    toDateRequired:
+      name: toDate
+      in: query
+      required: true
+      schema:
+        type: string
+        format: date
+    fromDate:
+      name: fromDate
+      in: query
+      required: false
+      schema:
+        type: string
+        format: date
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Access token obtained from POST /partner/account/login (or /account/login/as), sent as ''Authorization: Bearer <token>''. Tokens are valid for 8 hours.'

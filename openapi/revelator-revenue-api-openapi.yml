@@ -1,0 +1,133 @@
+openapi: 3.0.1
+info:
+  title: Revelator Account Revenue API
+  description: REST API for the Revelator music distribution and rights, royalties, and payments platform. Covers account/catalog management, distribution to DSPs, analytics and trends, royalty accounting and financial reporting, and payments / royalty-token (Web3 wallet) operations. Authentication uses an access token (Bearer) obtained from the partner login endpoints; tokens are valid for 8 hours and must be sent in the Authorization header.
+  termsOfService: https://www.revelator.com/terms
+  contact:
+    name: Revelator Support
+    url: https://api-docs.revelator.com
+  version: '1.0'
+servers:
+- url: https://api.revelator.com
+  description: Production
+security:
+- bearerAuth: []
+tags:
+- name: Revenue
+  description: Financial sale reports and user statements.
+paths:
+  /finance/salereport/all:
+    get:
+      operationId: getSaleReports
+      tags:
+      - Revenue
+      summary: List financial reports (user statements and sale reports).
+      description: Retrieves User Statements (system-generated during royalty runs) and Sale Reports (raw DSP imports). Supports filtering by date range, release id, track id, store id, payee id, processing status, and approval status.
+      parameters:
+      - $ref: '#/components/parameters/fromDate'
+      - $ref: '#/components/parameters/toDate'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageNumber'
+      responses:
+        '200':
+          description: OK
+  /finance/salereport/{statementId}:
+    get:
+      operationId: getSaleReport
+      tags:
+      - Revenue
+      summary: Retrieve a single statement.
+      description: Retrieves a single statement. The statement id uses the format {statementTypeId}|{statementId}.
+      parameters:
+      - name: statementId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+  /finance/salereport/download/summary:
+    get:
+      operationId: downloadStatementSummary
+      tags:
+      - Revenue
+      summary: Download a user-statement summary (HTML).
+      description: 'Deprecated: effective June 19, 2026 this endpoint will be removed.'
+      deprecated: true
+      responses:
+        '200':
+          description: HTML file.
+          content:
+            text/html:
+              schema:
+                type: string
+  /finance/salereport/download/details:
+    get:
+      operationId: downloadStatementDetails
+      tags:
+      - Revenue
+      summary: Download user-statement details (CSV).
+      responses:
+        '200':
+          description: CSV file.
+          content:
+            text/csv:
+              schema:
+                type: string
+  /finance/salereport/post-download:
+    post:
+      operationId: postDownloadSaleReports
+      tags:
+      - Revenue
+      summary: Download one or more sale reports as a ZIP archive.
+      description: Accepts a JSON array of statement ids and returns a compressed ZIP archive.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+      responses:
+        '200':
+          description: ZIP archive.
+          content:
+            application/zip:
+              schema:
+                type: string
+                format: binary
+components:
+  parameters:
+    toDate:
+      name: toDate
+      in: query
+      required: false
+      schema:
+        type: string
+        format: date
+    fromDate:
+      name: fromDate
+      in: query
+      required: false
+      schema:
+        type: string
+        format: date
+    pageNumber:
+      name: pageNumber
+      in: query
+      required: false
+      schema:
+        type: integer
+    pageSize:
+      name: pageSize
+      in: query
+      required: false
+      schema:
+        type: integer
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Access token obtained from POST /partner/account/login (or /account/login/as), sent as ''Authorization: Bearer <token>''. Tokens are valid for 8 hours.'

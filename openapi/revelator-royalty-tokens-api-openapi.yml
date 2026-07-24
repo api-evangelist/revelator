@@ -1,0 +1,143 @@
+openapi: 3.0.1
+info:
+  title: Revelator Account Royalty Tokens API
+  description: REST API for the Revelator music distribution and rights, royalties, and payments platform. Covers account/catalog management, distribution to DSPs, analytics and trends, royalty accounting and financial reporting, and payments / royalty-token (Web3 wallet) operations. Authentication uses an access token (Bearer) obtained from the partner login endpoints; tokens are valid for 8 hours and must be sent in the Authorization header.
+  termsOfService: https://www.revelator.com/terms
+  contact:
+    name: Revelator Support
+    url: https://api-docs.revelator.com
+  version: '1.0'
+servers:
+- url: https://api.revelator.com
+  description: Production
+security:
+- bearerAuth: []
+tags:
+- name: Royalty Tokens
+  description: Minting and retrieving ERC1155 royalty tokens.
+paths:
+  /royaltyTokens:
+    get:
+      operationId: getRoyaltyTokens
+      tags:
+      - Royalty Tokens
+      summary: List royalty tokens.
+      description: Retrieves all royalty tokens for the account, with pagination, filtering by status and date range, and search.
+      parameters:
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageNumber'
+      responses:
+        '200':
+          description: OK
+    post:
+      operationId: mintRoyaltyToken
+      tags:
+      - Royalty Tokens
+      summary: Mint a royalty token.
+      description: Mints a new ERC1155 royalty token for a track asset, with a total supply and a holder list (Web3 wallet addresses, friendly names, token balances) and an optional payout rate (1-100%, defaults to 100%). The enterprise smart-wallet address is automatically designated an Admin holder.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoyaltyTokenMintRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoyaltyToken'
+  /royaltyTokens/{tokenId}:
+    get:
+      operationId: getRoyaltyToken
+      tags:
+      - Royalty Tokens
+      summary: Retrieve a royalty token by id.
+      parameters:
+      - name: tokenId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoyaltyToken'
+components:
+  schemas:
+    RoyaltyToken:
+      type: object
+      properties:
+        tokenId:
+          type: string
+        assetId:
+          type: string
+        totalSupply:
+          type: integer
+        smartContractStandard:
+          type: string
+        status:
+          type: string
+        holders:
+          type: array
+          items:
+            type: object
+    RoyaltyTokenMintRequest:
+      type: object
+      properties:
+        assetType:
+          type: string
+          enum:
+          - track
+        assetId:
+          type: string
+        totalSupply:
+          type: integer
+        smartContractStandard:
+          type: string
+          enum:
+          - ERC1155
+        payoutRate:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 100
+        holders:
+          type: array
+          items:
+            type: object
+            properties:
+              walletAddress:
+                type: string
+              friendlyName:
+                type: string
+              balance:
+                type: integer
+      required:
+      - assetType
+      - assetId
+      - totalSupply
+      - smartContractStandard
+      - holders
+  parameters:
+    pageNumber:
+      name: pageNumber
+      in: query
+      required: false
+      schema:
+        type: integer
+    pageSize:
+      name: pageSize
+      in: query
+      required: false
+      schema:
+        type: integer
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Access token obtained from POST /partner/account/login (or /account/login/as), sent as ''Authorization: Bearer <token>''. Tokens are valid for 8 hours.'

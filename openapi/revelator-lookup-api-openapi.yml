@@ -1,0 +1,41 @@
+openapi: 3.0.1
+info:
+  title: Revelator Account Lookup API
+  description: REST API for the Revelator music distribution and rights, royalties, and payments platform. Covers account/catalog management, distribution to DSPs, analytics and trends, royalty accounting and financial reporting, and payments / royalty-token (Web3 wallet) operations. Authentication uses an access token (Bearer) obtained from the partner login endpoints; tokens are valid for 8 hours and must be sent in the Authorization header.
+  termsOfService: https://www.revelator.com/terms
+  contact:
+    name: Revelator Support
+    url: https://api-docs.revelator.com
+  version: '1.0'
+servers:
+- url: https://api.revelator.com
+  description: Production
+security:
+- bearerAuth: []
+tags:
+- name: Lookup
+  description: Common reference/lookup data.
+paths:
+  /common/lookup/{type}:
+    get:
+      operationId: getLookup
+      tags:
+      - Lookup
+      summary: Retrieve lookup data.
+      description: Retrieves lookup data such as currencies, countries, and stores.
+      parameters:
+      - name: type
+        in: path
+        required: true
+        schema:
+          type: string
+          example: stores
+      responses:
+        '200':
+          description: OK
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Access token obtained from POST /partner/account/login (or /account/login/as), sent as ''Authorization: Bearer <token>''. Tokens are valid for 8 hours.'

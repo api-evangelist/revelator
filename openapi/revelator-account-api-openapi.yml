@@ -1,0 +1,148 @@
+openapi: 3.0.1
+info:
+  title: Revelator Account API
+  description: REST API for the Revelator music distribution and rights, royalties, and payments platform. Covers account/catalog management, distribution to DSPs, analytics and trends, royalty accounting and financial reporting, and payments / royalty-token (Web3 wallet) operations. Authentication uses an access token (Bearer) obtained from the partner login endpoints; tokens are valid for 8 hours and must be sent in the Authorization header.
+  termsOfService: https://www.revelator.com/terms
+  contact:
+    name: Revelator Support
+    url: https://api-docs.revelator.com
+  version: '1.0'
+servers:
+- url: https://api.revelator.com
+  description: Production
+security:
+- bearerAuth: []
+tags:
+- name: Account
+  description: Partner account signup, login, switching, and permissions.
+paths:
+  /partner/account/signup:
+    post:
+      operationId: partnerAccountSignup
+      tags:
+      - Account
+      summary: Create a new child account and user.
+      description: Creates a new child (enterprise) account and user under the partner. Authenticated with the partner API key.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignupRequest'
+      responses:
+        '200':
+          description: Account created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthToken'
+  /partner/account/login:
+    post:
+      operationId: partnerAccountLogin
+      tags:
+      - Account
+      summary: Authenticate a user and obtain an access token.
+      description: Prompted login uses username/password plus partnerApiKey; unprompted login uses partnerUserId plus partnerApiKey. Returns an access token valid for 8 hours.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Authenticated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthToken'
+  /partner/account/upgrade:
+    post:
+      operationId: partnerAccountUpgrade
+      tags:
+      - Account
+      summary: Upgrade an account type or settings.
+      responses:
+        '200':
+          description: OK
+  /account/login/as:
+    post:
+      operationId: accountLoginAs
+      tags:
+      - Account
+      summary: Switch authentication context to a different enterprise.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthToken'
+  /account/permissions:
+    get:
+      operationId: getAccountPermissions
+      tags:
+      - Account
+      summary: Retrieve the list of accessible accounts.
+      responses:
+        '200':
+          description: OK
+  /enterprise/clients/{enterpriseId}:
+    get:
+      operationId: getEnterpriseClients
+      tags:
+      - Account
+      summary: Retrieve client information for an enterprise.
+      parameters:
+      - name: enterpriseId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+components:
+  schemas:
+    AuthToken:
+      type: object
+      properties:
+        access_token:
+          type: string
+        enterpriseId:
+          type: string
+        expiresIn:
+          type: integer
+          description: Token lifetime in seconds (8 hours).
+    LoginRequest:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Email (prompted login).
+        password:
+          type: string
+          description: Password (prompted login).
+        partnerUserId:
+          type: string
+          description: Partner-side user id (unprompted login).
+        partnerApiKey:
+          type: string
+      required:
+      - partnerApiKey
+    SignupRequest:
+      type: object
+      properties:
+        partnerApiKey:
+          type: string
+        email:
+          type: string
+        name:
+          type: string
+      required:
+      - partnerApiKey
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Access token obtained from POST /partner/account/login (or /account/login/as), sent as ''Authorization: Bearer <token>''. Tokens are valid for 8 hours.'

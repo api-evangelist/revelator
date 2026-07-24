@@ -1,0 +1,148 @@
+openapi: 3.0.1
+info:
+  title: Revelator Account Distribution API
+  description: REST API for the Revelator music distribution and rights, royalties, and payments platform. Covers account/catalog management, distribution to DSPs, analytics and trends, royalty accounting and financial reporting, and payments / royalty-token (Web3 wallet) operations. Authentication uses an access token (Bearer) obtained from the partner login endpoints; tokens are valid for 8 hours and must be sent in the Authorization header.
+  termsOfService: https://www.revelator.com/terms
+  contact:
+    name: Revelator Support
+    url: https://api-docs.revelator.com
+  version: '1.0'
+servers:
+- url: https://api.revelator.com
+  description: Production
+security:
+- bearerAuth: []
+tags:
+- name: Distribution
+  description: Release validation, distribution options, queueing, status, takedown.
+paths:
+  /distribution/release/{releaseId}/validate:
+    post:
+      operationId: validateRelease
+      tags:
+      - Distribution
+      summary: Validate release metadata.
+      description: Runs automated validation of release metadata, returning errors with severity levels (1 = blocking, 2 = warning).
+      parameters:
+      - name: releaseId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Validation results.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationResult'
+  /content/release/retail/save:
+    post:
+      operationId: saveRetailDistributionOptions
+      tags:
+      - Distribution
+      summary: Configure distribution / retail options.
+      description: Configures distribution settings including sale dates, times, timezones, monetization policies, territorial availability, and price tiers.
+      responses:
+        '200':
+          description: OK
+  /distribution/release/addtoqueue:
+    post:
+      operationId: addReleaseToQueue
+      tags:
+      - Distribution
+      summary: Add a release to the distribution queue.
+      description: Adds a release to the distribution queue, specifying target DSP/store IDs for delivery.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddToQueueRequest'
+      responses:
+        '200':
+          description: OK
+  /distribution/release/all:
+    get:
+      operationId: getAllReleaseDistributionStatus
+      tags:
+      - Distribution
+      summary: List releases with distribution statuses.
+      description: Retrieves a paginated list of releases with distribution statuses per store, supporting filters by artist, label, date ranges, and status.
+      parameters:
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageNumber'
+      responses:
+        '200':
+          description: OK
+  /distribution/store/all:
+    get:
+      operationId: getStoreDistributionStatus
+      tags:
+      - Distribution
+      summary: Distribution status counts across stores.
+      description: Returns distribution status counts across DSPs; includes detailed per-store status when the releaseId parameter is provided.
+      parameters:
+      - name: releaseId
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+  /distribution/release/takedown:
+    post:
+      operationId: takedownRelease
+      tags:
+      - Distribution
+      summary: Take a release down from stores.
+      description: Removes a release from one or more specified stores.
+      responses:
+        '200':
+          description: OK
+components:
+  schemas:
+    ValidationResult:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              severity:
+                type: integer
+                description: 1 = blocking, 2 = warning.
+    AddToQueueRequest:
+      type: object
+      properties:
+        releaseId:
+          type: string
+        storeIds:
+          type: array
+          items:
+            type: string
+      required:
+      - releaseId
+      - storeIds
+  parameters:
+    pageNumber:
+      name: pageNumber
+      in: query
+      required: false
+      schema:
+        type: integer
+    pageSize:
+      name: pageSize
+      in: query
+      required: false
+      schema:
+        type: integer
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Access token obtained from POST /partner/account/login (or /account/login/as), sent as ''Authorization: Bearer <token>''. Tokens are valid for 8 hours.'

@@ -1,0 +1,143 @@
+openapi: 3.0.1
+info:
+  title: Revelator Account Accounting API
+  description: REST API for the Revelator music distribution and rights, royalties, and payments platform. Covers account/catalog management, distribution to DSPs, analytics and trends, royalty accounting and financial reporting, and payments / royalty-token (Web3 wallet) operations. Authentication uses an access token (Bearer) obtained from the partner login endpoints; tokens are valid for 8 hours and must be sent in the Authorization header.
+  termsOfService: https://www.revelator.com/terms
+  contact:
+    name: Revelator Support
+    url: https://api-docs.revelator.com
+  version: '1.0'
+servers:
+- url: https://api.revelator.com
+  description: Production
+security:
+- bearerAuth: []
+tags:
+- name: Accounting
+  description: Rights contracts and payee management.
+paths:
+  /accounting/contract/save:
+    post:
+      operationId: saveContract
+      tags:
+      - Accounting
+      summary: Create or update a rights contract.
+      description: Creates or modifies a contract (account, label, artist, release, or track level) with full payee and licensor configuration. Requires a parent account access token. The API does not support partial updates - the full object must be submitted.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Contract'
+      responses:
+        '200':
+          description: OK
+  /accounting/contracts:
+    get:
+      operationId: getContracts
+      tags:
+      - Accounting
+      summary: List contracts.
+      description: Retrieves a paginated list of contracts with filtering, sorting, and search.
+      parameters:
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageNumber'
+      responses:
+        '200':
+          description: OK
+  /accounting/contracts/{contractId}:
+    get:
+      operationId: getContract
+      tags:
+      - Accounting
+      summary: Retrieve a contract by id.
+      parameters:
+      - name: contractId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contract'
+  /accounting/payee/{payeeId}:
+    get:
+      operationId: getPayee
+      tags:
+      - Accounting
+      summary: Retrieve payee information.
+      parameters:
+      - name: payeeId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payee'
+components:
+  schemas:
+    Contract:
+      type: object
+      properties:
+        contractId:
+          type: string
+        name:
+          type: string
+        level:
+          type: string
+          enum:
+          - account
+          - label
+          - artist
+          - release
+          - track
+        active:
+          type: boolean
+        payees:
+          type: array
+          items:
+            $ref: '#/components/schemas/Payee'
+        licensors:
+          type: array
+          items:
+            type: object
+    Payee:
+      type: object
+      properties:
+        payeeId:
+          type: string
+        name:
+          type: string
+        paymentProviderId:
+          type: string
+        paymentProviderName:
+          type: string
+        paymentUserId:
+          type: string
+  parameters:
+    pageNumber:
+      name: pageNumber
+      in: query
+      required: false
+      schema:
+        type: integer
+    pageSize:
+      name: pageSize
+      in: query
+      required: false
+      schema:
+        type: integer
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Access token obtained from POST /partner/account/login (or /account/login/as), sent as ''Authorization: Bearer <token>''. Tokens are valid for 8 hours.'

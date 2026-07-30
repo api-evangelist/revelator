@@ -7,7 +7,20 @@ description: Revelator is a music distribution and rights, royalties, and paymen
   API exposes the digital supply chain - distribution, catalog, analytics and trends,
   royalty accounting, and payments - behind a single OAuth2 Bearer-token interface
   using a child-account model.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: paid
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Paid · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/revelator.png
 tags:
 - Music
 - Distribution
@@ -19,124 +32,262 @@ created: '2026-06-21'
 modified: '2026-06-21'
 specificationVersion: '0.19'
 apis:
-- aid: revelator:revelator-distribution-api
-  name: Revelator Distribution API
-  tags:
-  - Distribution
-  - Releases
-  - DSP
-  - Delivery
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+- aid: revelator:revelator-account-api
+  name: Revelator Account API
+  description: Partner account signup, login, switching, and permissions.
   humanURL: https://api-docs.revelator.com/en/distribution/
   baseURL: https://api.revelator.com
-  properties:
-  - url: https://api-docs.revelator.com/en/distribution/
-    type: Documentation
-  - url: https://api-docs.revelator.com/en/distribution/
-    type: APIReference
-  - url: openapi/revelator-openapi.yml
-    type: OpenAPI
-  - url: collections/revelator.postman_collection.json
-    type: PostmanCollection
-  - url: collections/revelator.opencollection.json
-    type: OpenCollection
-  description: Validates release metadata, configures retail/distribution options,
-    queues releases for delivery to DSPs/stores, retrieves per-store distribution
-    status, and processes takedowns.
-- aid: revelator:revelator-catalog-api
-  name: Revelator Catalog API
   tags:
-  - Catalog
-  - Releases
-  - Tracks
-  - Assets
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://api-docs.revelator.com/en/getting-started
-  baseURL: https://api.revelator.com
+  - Account
   properties:
-  - url: https://api-docs.revelator.com/en/getting-started
-    type: Documentation
-  - url: openapi/revelator-openapi.yml
-    type: OpenAPI
-  - url: collections/revelator.postman_collection.json
-    type: PostmanCollection
-  - url: collections/revelator.opencollection.json
-    type: OpenCollection
-  description: Manages enterprise accounts and their catalog of releases, tracks,
-    and assets, including account signup/login, account switching, permissions, and
-    common lookup data (currencies, countries, stores).
+  - type: OpenAPI
+    url: openapi/revelator-account-api-openapi.yml
+  - type: Documentation
+    url: https://api-docs.revelator.com/en/distribution/
+  - type: APIReference
+    url: https://api-docs.revelator.com/en/distribution/
+  - type: PostmanCollection
+    url: collections/revelator.postman_collection.json
+  - type: OpenCollection
+    url: collections/revelator.opencollection.json
+  - type: Documentation
+    url: https://api-docs.revelator.com/en/getting-started
+  - type: Documentation
+    url: https://api-docs.revelator.com/en/analytics/
+  - type: APIReference
+    url: https://api-docs.revelator.com/en/analytics/
+  - type: Documentation
+    url: https://api-docs.revelator.com/en/rights/
+  - type: APIReference
+    url: https://api-docs.revelator.com/en/revenue/
+  - type: Documentation
+    url: https://api-docs.revelator.com/en/integrations/
+  - type: APIReference
+    url: https://api-docs.revelator.com/en/royalty-tokens/
+- aid: revelator:revelator-accounting-api
+  name: Revelator Accounting API
+  description: Rights contracts and payee management.
+  humanURL: https://api-docs.revelator.com/en/distribution/
+  baseURL: https://api.revelator.com
+  tags:
+  - Accounting
+  properties:
+  - type: OpenAPI
+    url: openapi/revelator-accounting-api-openapi.yml
+  - type: Documentation
+    url: https://api-docs.revelator.com/en/distribution/
+  - type: APIReference
+    url: https://api-docs.revelator.com/en/distribution/
+  - type: PostmanCollection
+    url: collections/revelator.postman_collection.json
+  - type: OpenCollection
+    url: collections/revelator.opencollection.json
+  - type: Documentation
+    url: https://api-docs.revelator.com/en/getting-started
+  - type: Documentation
+    url: https://api-docs.revelator.com/en/analytics/
+  - type: APIReference
+    url: https://api-docs.revelator.com/en/analytics/
+  - type: Documentation
+    url: https://api-docs.revelator.com/en/rights/
+  - type: APIReference
+    url: https://api-docs.revelator.com/en/revenue/
+  - type: Documentation
+    url: https://api-docs.revelator.com/en/integrations/
+  - type: APIReference
+    url: https://api-docs.revelator.com/en/royalty-tokens/
 - aid: revelator:revelator-analytics-api
   name: Revelator Analytics API
+  description: Revenue, consumption, engagement, playlist, and artificial-streaming analytics.
+  humanURL: https://api-docs.revelator.com/en/distribution/
+  baseURL: https://api.revelator.com
   tags:
   - Analytics
-  - Trends
-  - Streams
-  - Consumption
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://api-docs.revelator.com/en/analytics/
-  baseURL: https://api.revelator.com
   properties:
-  - url: https://api-docs.revelator.com/en/analytics/
-    type: Documentation
-  - url: https://api-docs.revelator.com/en/analytics/
-    type: APIReference
-  - url: openapi/revelator-openapi.yml
-    type: OpenAPI
-  - url: collections/revelator.postman_collection.json
-    type: PostmanCollection
-  - url: collections/revelator.opencollection.json
-    type: OpenCollection
-  description: Aggregated revenue, consumption, and engagement analytics across many
-    dimensions (artist, country, track, release, distributor, playlist), plus
-    key metrics, playlist performance, and artificial-streaming detection.
-- aid: revelator:revelator-royalties-accounting-api
-  name: Revelator Royalties & Accounting API
+  - type: OpenAPI
+    url: openapi/revelator-analytics-api-openapi.yml
+  - type: Documentation
+    url: https://api-docs.revelator.com/en/distribution/
+  - type: APIReference
+    url: https://api-docs.revelator.com/en/distribution/
+  - type: PostmanCollection
+    url: collections/revelator.postman_collection.json
+  - type: OpenCollection
+    url: collections/revelator.opencollection.json
+  - type: Documentation
+    url: https://api-docs.revelator.com/en/getting-started
+  - type: Documentation
+    url: https://api-docs.revelator.com/en/analytics/
+  - type: APIReference
+    url: https://api-docs.revelator.com/en/analytics/
+  - type: Documentation
+    url: https://api-docs.revelator.com/en/rights/
+  - type: APIReference
+    url: https://api-docs.revelator.com/en/revenue/
+  - type: Documentation
+    url: https://api-docs.revelator.com/en/integrations/
+  - type: APIReference
+    url: https://api-docs.revelator.com/en/royalty-tokens/
+- aid: revelator:revelator-distribution-api
+  name: Revelator Distribution API
+  description: Release validation, distribution options, queueing, status, takedown.
+  humanURL: https://api-docs.revelator.com/en/distribution/
+  baseURL: https://api.revelator.com
   tags:
-  - Royalties
-  - Accounting
-  - Contracts
+  - Distribution
+  properties:
+  - type: OpenAPI
+    url: openapi/revelator-distribution-api-openapi.yml
+  - type: Documentation
+    url: https://api-docs.revelator.com/en/distribution/
+  - type: APIReference
+    url: https://api-docs.revelator.com/en/distribution/
+  - type: PostmanCollection
+    url: collections/revelator.postman_collection.json
+  - type: OpenCollection
+    url: collections/revelator.opencollection.json
+  - type: Documentation
+    url: https://api-docs.revelator.com/en/getting-started
+  - type: Documentation
+    url: https://api-docs.revelator.com/en/analytics/
+  - type: APIReference
+    url: https://api-docs.revelator.com/en/analytics/
+  - type: Documentation
+    url: https://api-docs.revelator.com/en/rights/
+  - type: APIReference
+    url: https://api-docs.revelator.com/en/revenue/
+  - type: Documentation
+    url: https://api-docs.revelator.com/en/integrations/
+  - type: APIReference
+    url: https://api-docs.revelator.com/en/royalty-tokens/
+- aid: revelator:revelator-integrations-api
+  name: Revelator Integrations API
+  description: Payment-provider (Tipalti) integration.
+  humanURL: https://api-docs.revelator.com/en/distribution/
+  baseURL: https://api.revelator.com
+  tags:
+  - Integrations
+  properties:
+  - type: OpenAPI
+    url: openapi/revelator-integrations-api-openapi.yml
+  - type: Documentation
+    url: https://api-docs.revelator.com/en/distribution/
+  - type: APIReference
+    url: https://api-docs.revelator.com/en/distribution/
+  - type: PostmanCollection
+    url: collections/revelator.postman_collection.json
+  - type: OpenCollection
+    url: collections/revelator.opencollection.json
+  - type: Documentation
+    url: https://api-docs.revelator.com/en/getting-started
+  - type: Documentation
+    url: https://api-docs.revelator.com/en/analytics/
+  - type: APIReference
+    url: https://api-docs.revelator.com/en/analytics/
+  - type: Documentation
+    url: https://api-docs.revelator.com/en/rights/
+  - type: APIReference
+    url: https://api-docs.revelator.com/en/revenue/
+  - type: Documentation
+    url: https://api-docs.revelator.com/en/integrations/
+  - type: APIReference
+    url: https://api-docs.revelator.com/en/royalty-tokens/
+- aid: revelator:revelator-lookup-api
+  name: Revelator Lookup API
+  description: Common reference/lookup data.
+  humanURL: https://api-docs.revelator.com/en/distribution/
+  baseURL: https://api.revelator.com
+  tags:
+  - Lookup
+  properties:
+  - type: OpenAPI
+    url: openapi/revelator-lookup-api-openapi.yml
+  - type: Documentation
+    url: https://api-docs.revelator.com/en/distribution/
+  - type: APIReference
+    url: https://api-docs.revelator.com/en/distribution/
+  - type: PostmanCollection
+    url: collections/revelator.postman_collection.json
+  - type: OpenCollection
+    url: collections/revelator.opencollection.json
+  - type: Documentation
+    url: https://api-docs.revelator.com/en/getting-started
+  - type: Documentation
+    url: https://api-docs.revelator.com/en/analytics/
+  - type: APIReference
+    url: https://api-docs.revelator.com/en/analytics/
+  - type: Documentation
+    url: https://api-docs.revelator.com/en/rights/
+  - type: APIReference
+    url: https://api-docs.revelator.com/en/revenue/
+  - type: Documentation
+    url: https://api-docs.revelator.com/en/integrations/
+  - type: APIReference
+    url: https://api-docs.revelator.com/en/royalty-tokens/
+- aid: revelator:revelator-revenue-api
+  name: Revelator Revenue API
+  description: Financial sale reports and user statements.
+  humanURL: https://api-docs.revelator.com/en/distribution/
+  baseURL: https://api.revelator.com
+  tags:
   - Revenue
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://api-docs.revelator.com/en/rights/
-  baseURL: https://api.revelator.com
   properties:
-  - url: https://api-docs.revelator.com/en/rights/
-    type: Documentation
-  - url: https://api-docs.revelator.com/en/revenue/
-    type: APIReference
-  - url: openapi/revelator-openapi.yml
-    type: OpenAPI
-  - url: collections/revelator.postman_collection.json
-    type: PostmanCollection
-  - url: collections/revelator.opencollection.json
-    type: OpenCollection
-  description: Manages rights contracts, payees, and licensors, and retrieves
-    financial sale reports and user statements (royalty runs and raw DSP imports)
-    with summary and detail downloads.
-- aid: revelator:revelator-payments-wallet-api
-  name: Revelator Payments & Wallet API
+  - type: OpenAPI
+    url: openapi/revelator-revenue-api-openapi.yml
+  - type: Documentation
+    url: https://api-docs.revelator.com/en/distribution/
+  - type: APIReference
+    url: https://api-docs.revelator.com/en/distribution/
+  - type: PostmanCollection
+    url: collections/revelator.postman_collection.json
+  - type: OpenCollection
+    url: collections/revelator.opencollection.json
+  - type: Documentation
+    url: https://api-docs.revelator.com/en/getting-started
+  - type: Documentation
+    url: https://api-docs.revelator.com/en/analytics/
+  - type: APIReference
+    url: https://api-docs.revelator.com/en/analytics/
+  - type: Documentation
+    url: https://api-docs.revelator.com/en/rights/
+  - type: APIReference
+    url: https://api-docs.revelator.com/en/revenue/
+  - type: Documentation
+    url: https://api-docs.revelator.com/en/integrations/
+  - type: APIReference
+    url: https://api-docs.revelator.com/en/royalty-tokens/
+- aid: revelator:revelator-royalty-tokens-api
+  name: Revelator Royalty Tokens API
+  description: Minting and retrieving ERC1155 royalty tokens.
+  humanURL: https://api-docs.revelator.com/en/distribution/
+  baseURL: https://api.revelator.com
   tags:
-  - Payments
-  - Wallet
-  - Payouts
   - Royalty Tokens
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://api-docs.revelator.com/en/royalty-tokens/
-  baseURL: https://api.revelator.com
   properties:
-  - url: https://api-docs.revelator.com/en/integrations/
-    type: Documentation
-  - url: https://api-docs.revelator.com/en/royalty-tokens/
-    type: APIReference
-  - url: openapi/revelator-openapi.yml
-    type: OpenAPI
-  - url: collections/revelator.postman_collection.json
-    type: PostmanCollection
-  - url: collections/revelator.opencollection.json
-    type: OpenCollection
-  description: Configures payee payment methods via Tipalti, and mints, lists, and
-    retrieves ERC1155 royalty tokens backed by track assets with Web3 smart-wallet
-    holders for on-chain royalty distribution.
+  - type: OpenAPI
+    url: openapi/revelator-royalty-tokens-api-openapi.yml
+  - type: Documentation
+    url: https://api-docs.revelator.com/en/distribution/
+  - type: APIReference
+    url: https://api-docs.revelator.com/en/distribution/
+  - type: PostmanCollection
+    url: collections/revelator.postman_collection.json
+  - type: OpenCollection
+    url: collections/revelator.opencollection.json
+  - type: Documentation
+    url: https://api-docs.revelator.com/en/getting-started
+  - type: Documentation
+    url: https://api-docs.revelator.com/en/analytics/
+  - type: APIReference
+    url: https://api-docs.revelator.com/en/analytics/
+  - type: Documentation
+    url: https://api-docs.revelator.com/en/rights/
+  - type: APIReference
+    url: https://api-docs.revelator.com/en/revenue/
+  - type: Documentation
+    url: https://api-docs.revelator.com/en/integrations/
+  - type: APIReference
+    url: https://api-docs.revelator.com/en/royalty-tokens/
 common:
 - type: AgenticAccess
   url: agentic-access/revelator-agentic-access.yml

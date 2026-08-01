@@ -1,0 +1,28 @@
+{
+  "provider": "revelator",
+  "sources": [
+    "revelator-account-api-openapi.yml",
+    "revelator-accounting-api-openapi.yml",
+    "revelator-analytics-api-openapi.yml",
+    "revelator-distribution-api-openapi.yml",
+    "revelator-integrations-api-openapi.yml",
+    "revelator-lookup-api-openapi.yml",
+    "revelator-revenue-api-openapi.yml",
+    "revelator-royalty-tokens-api-openapi.yml"
+  ],
+  "outputs": [
+    "revelator-account-api-openapi.yml",
+    "revelator-accounting-api-openapi.yml",
+    "revelator-analytics-api-openapi.yml",
+    "revelator-distribution-api-openapi.yml",
+    "revelator-integrations-api-openapi.yml",
+    "revelator-lookup-api-openapi.yml",
+    "revelator-revenue-api-openapi.yml",
+    "revelator-royalty-tokens-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

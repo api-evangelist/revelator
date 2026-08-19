@@ -1,0 +1,112 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Revelator Account Revenue API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Revenue",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List financial reports (user statements and sale reports).",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.revelator.com/finance/salereport/all",
+            "params": [
+              {
+                "name": "fromDate",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "toDate",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageNumber",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieves User Statements (system-generated during royalty runs) and Sale Reports (raw DSP imports). Supports filtering by date range, release id, track id, store id, payee id, processing status, and approval status."
+        },
+        {
+          "info": {
+            "name": "Retrieve a single statement.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.revelator.com/finance/salereport/:statementId",
+            "params": [
+              {
+                "name": "statementId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves a single statement. The statement id uses the format {statementTypeId}|{statementId}."
+        },
+        {
+          "info": {
+            "name": "Download a user-statement summary (HTML).",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.revelator.com/finance/salereport/download/summary"
+          },
+          "docs": "Deprecated: effective June 19, 2026 this endpoint will be removed."
+        },
+        {
+          "info": {
+            "name": "Download user-statement details (CSV).",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.revelator.com/finance/salereport/download/details"
+          },
+          "docs": "Download user-statement details (CSV)."
+        },
+        {
+          "info": {
+            "name": "Download one or more sale reports as a ZIP archive.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.revelator.com/finance/salereport/post-download",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Accepts a JSON array of statement ids and returns a compressed ZIP archive."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

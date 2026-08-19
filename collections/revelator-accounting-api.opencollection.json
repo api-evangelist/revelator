@@ -1,0 +1,98 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Revelator Account Accounting API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Accounting",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create or update a rights contract.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.revelator.com/accounting/contract/save",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates or modifies a contract (account, label, artist, release, or track level) with full payee and licensor configuration. Requires a parent account access token. The API does not support partial updates - the full object must be submitted."
+        },
+        {
+          "info": {
+            "name": "List contracts.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.revelator.com/accounting/contracts",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageNumber",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of contracts with filtering, sorting, and search."
+        },
+        {
+          "info": {
+            "name": "Retrieve a contract by id.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.revelator.com/accounting/contracts/:contractId",
+            "params": [
+              {
+                "name": "contractId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve a contract by id."
+        },
+        {
+          "info": {
+            "name": "Retrieve payee information.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.revelator.com/accounting/payee/:payeeId",
+            "params": [
+              {
+                "name": "payeeId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve payee information."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

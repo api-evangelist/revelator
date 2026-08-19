@@ -1,0 +1,557 @@
+{
+  "item": [
+    {
+      "id": "746eee36-9925-4a97-b465-522ab8e1185e",
+      "name": "Distribution",
+      "description": {
+        "content": "Release validation, distribution options, queueing, status, takedown.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8f2b924e-3fdd-4375-8c02-851bc2e96546",
+          "name": "Validate release metadata.",
+          "request": {
+            "name": "Validate release metadata.",
+            "description": {
+              "content": "Runs automated validation of release metadata, returning errors with severity levels (1 = blocking, 2 = warning).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "distribution",
+                "release",
+                ":releaseId",
+                "validate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "releaseId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9e28aa2e-9828-419f-a3f6-0ce55c63f048",
+              "name": "Validation results.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "distribution",
+                    "release",
+                    ":releaseId",
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "releaseId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"severity\": 3260\n    },\n    {\n      \"message\": \"string\",\n      \"severity\": 8980\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "66725367-0d10-4f3d-a164-503a546dc3f2",
+          "name": "Configure distribution / retail options.",
+          "request": {
+            "name": "Configure distribution / retail options.",
+            "description": {
+              "content": "Configures distribution settings including sale dates, times, timezones, monetization policies, territorial availability, and price tiers.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "content",
+                "release",
+                "retail",
+                "save"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "539eca42-7fad-40ac-9139-14aedf42fdff",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "content",
+                    "release",
+                    "retail",
+                    "save"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "332bd8e4-6c15-4a2b-808a-085cf5fe4f98",
+          "name": "Add a release to the distribution queue.",
+          "request": {
+            "name": "Add a release to the distribution queue.",
+            "description": {
+              "content": "Adds a release to the distribution queue, specifying target DSP/store IDs for delivery.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "distribution",
+                "release",
+                "addtoqueue"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"releaseId\": \"<string>\",\n  \"storeIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5c412ea1-a2f4-4017-90ae-56bf701d3bd7",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "distribution",
+                    "release",
+                    "addtoqueue"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"releaseId\": \"<string>\",\n  \"storeIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c45d4703-2634-4c74-8d9b-54a55b250824",
+          "name": "List releases with distribution statuses.",
+          "request": {
+            "name": "List releases with distribution statuses.",
+            "description": {
+              "content": "Retrieves a paginated list of releases with distribution statuses per store, supporting filters by artist, label, date ranges, and status.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "distribution",
+                "release",
+                "all"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageNumber",
+                  "value": "<integer>"
+                }
+              ],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0a60c5e4-c0e5-474b-b103-aab4157cef0d",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "distribution",
+                    "release",
+                    "all"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageNumber",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ca682b82-a902-471d-a0ea-19c06445c912",
+          "name": "Distribution status counts across stores.",
+          "request": {
+            "name": "Distribution status counts across stores.",
+            "description": {
+              "content": "Returns distribution status counts across DSPs; includes detailed per-store status when the releaseId parameter is provided.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "distribution",
+                "store",
+                "all"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "releaseId",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "894438dc-6ad3-42b5-84d5-ac5289c58824",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "distribution",
+                    "store",
+                    "all"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "releaseId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "080575ec-d6cc-4809-a427-5683b74244ae",
+          "name": "Take a release down from stores.",
+          "request": {
+            "name": "Take a release down from stores.",
+            "description": {
+              "content": "Removes a release from one or more specified stores.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "distribution",
+                "release",
+                "takedown"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "33a0cf97-9ea7-4bc2-966a-e3fb1e3a8e76",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "distribution",
+                    "release",
+                    "takedown"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.revelator.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "5af03922-b274-4334-bfc8-018e10b5cbcf",
+    "name": "Revelator Account Distribution API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for the Revelator music distribution and rights, royalties, and payments platform. Covers account/catalog management, distribution to DSPs, analytics and trends, royalty accounting and financial reporting, and payments / royalty-token (Web3 wallet) operations. Authentication uses an access token (Bearer) obtained from the partner login endpoints; tokens are valid for 8 hours and must be sent in the Authorization header.\n\nContact Support:\n Name: Revelator Support",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Revelator Account API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Account",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a new child account and user.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.revelator.com/partner/account/signup",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new child (enterprise) account and user under the partner. Authenticated with the partner API key."
+        },
+        {
+          "info": {
+            "name": "Authenticate a user and obtain an access token.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.revelator.com/partner/account/login",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Prompted login uses username/password plus partnerApiKey; unprompted login uses partnerUserId plus partnerApiKey. Returns an access token valid for 8 hours."
+        },
+        {
+          "info": {
+            "name": "Upgrade an account type or settings.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.revelator.com/partner/account/upgrade"
+          },
+          "docs": "Upgrade an account type or settings."
+        },
+        {
+          "info": {
+            "name": "Switch authentication context to a different enterprise.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.revelator.com/account/login/as"
+          },
+          "docs": "Switch authentication context to a different enterprise."
+        },
+        {
+          "info": {
+            "name": "Retrieve the list of accessible accounts.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.revelator.com/account/permissions"
+          },
+          "docs": "Retrieve the list of accessible accounts."
+        },
+        {
+          "info": {
+            "name": "Retrieve client information for an enterprise.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.revelator.com/enterprise/clients/:enterpriseId",
+            "params": [
+              {
+                "name": "enterpriseId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve client information for an enterprise."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

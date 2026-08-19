@@ -1,0 +1,42 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Revelator Account Lookup API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Lookup",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve lookup data.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.revelator.com/common/lookup/:type",
+            "params": [
+              {
+                "name": "type",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves lookup data such as currencies, countries, and stores."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

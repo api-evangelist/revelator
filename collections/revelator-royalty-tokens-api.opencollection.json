@@ -1,0 +1,80 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Revelator Account Royalty Tokens API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Royalty Tokens",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List royalty tokens.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.revelator.com/royaltyTokens",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageNumber",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieves all royalty tokens for the account, with pagination, filtering by status and date range, and search."
+        },
+        {
+          "info": {
+            "name": "Mint a royalty token.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.revelator.com/royaltyTokens",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Mints a new ERC1155 royalty token for a track asset, with a total supply and a holder list (Web3 wallet addresses, friendly names, token balances) and an optional payout rate (1-100%, defaults to 100%). The enterprise smart-wallet address is automatically designated an Admin holder."
+        },
+        {
+          "info": {
+            "name": "Retrieve a royalty token by id.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.revelator.com/royaltyTokens/:tokenId",
+            "params": [
+              {
+                "name": "tokenId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve a royalty token by id."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

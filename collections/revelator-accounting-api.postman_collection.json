@@ -1,0 +1,416 @@
+{
+  "item": [
+    {
+      "id": "0673e89c-8fc6-4536-a69d-27dde68251d7",
+      "name": "Accounting",
+      "description": {
+        "content": "Rights contracts and payee management.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "43a2958b-7dc5-421e-b344-167baca2f462",
+          "name": "Create or update a rights contract.",
+          "request": {
+            "name": "Create or update a rights contract.",
+            "description": {
+              "content": "Creates or modifies a contract (account, label, artist, release, or track level) with full payee and licensor configuration. Requires a parent account access token. The API does not support partial updates - the full object must be submitted.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "accounting",
+                "contract",
+                "save"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"contractId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"level\": \"<string>\",\n  \"active\": \"<boolean>\",\n  \"payees\": [\n    {\n      \"payeeId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"paymentProviderId\": \"<string>\",\n      \"paymentProviderName\": \"<string>\",\n      \"paymentUserId\": \"<string>\"\n    },\n    {\n      \"payeeId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"paymentProviderId\": \"<string>\",\n      \"paymentProviderName\": \"<string>\",\n      \"paymentUserId\": \"<string>\"\n    }\n  ],\n  \"licensors\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "cbf88505-ecfe-4749-99ee-a3e4a2fb9843",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounting",
+                    "contract",
+                    "save"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"contractId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"level\": \"<string>\",\n  \"active\": \"<boolean>\",\n  \"payees\": [\n    {\n      \"payeeId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"paymentProviderId\": \"<string>\",\n      \"paymentProviderName\": \"<string>\",\n      \"paymentUserId\": \"<string>\"\n    },\n    {\n      \"payeeId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"paymentProviderId\": \"<string>\",\n      \"paymentProviderName\": \"<string>\",\n      \"paymentUserId\": \"<string>\"\n    }\n  ],\n  \"licensors\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f73796ae-0bce-484d-9d37-6dcd9fa4b497",
+          "name": "List contracts.",
+          "request": {
+            "name": "List contracts.",
+            "description": {
+              "content": "Retrieves a paginated list of contracts with filtering, sorting, and search.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "accounting",
+                "contracts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageNumber",
+                  "value": "<integer>"
+                }
+              ],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f8482306-2c38-488f-ad8e-e18007e8cf71",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounting",
+                    "contracts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageNumber",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d93fc8be-1763-4b29-baf0-239873c962af",
+          "name": "Retrieve a contract by id.",
+          "request": {
+            "name": "Retrieve a contract by id.",
+            "description": {},
+            "url": {
+              "path": [
+                "accounting",
+                "contracts",
+                ":contractId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "contractId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9ef1bbc1-fbd7-49e2-9179-a677f755656a",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounting",
+                    "contracts",
+                    ":contractId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contractId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"contractId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"level\": \"<string>\",\n  \"active\": \"<boolean>\",\n  \"payees\": [\n    {\n      \"payeeId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"paymentProviderId\": \"<string>\",\n      \"paymentProviderName\": \"<string>\",\n      \"paymentUserId\": \"<string>\"\n    },\n    {\n      \"payeeId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"paymentProviderId\": \"<string>\",\n      \"paymentProviderName\": \"<string>\",\n      \"paymentUserId\": \"<string>\"\n    }\n  ],\n  \"licensors\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "59e54af4-0ab8-4bad-8f3c-f93fa98e093d",
+          "name": "Retrieve payee information.",
+          "request": {
+            "name": "Retrieve payee information.",
+            "description": {},
+            "url": {
+              "path": [
+                "accounting",
+                "payee",
+                ":payeeId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "payeeId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c5d81164-da61-4c41-9af7-7d71a3010810",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounting",
+                    "payee",
+                    ":payeeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "payeeId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"payeeId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"paymentProviderId\": \"<string>\",\n  \"paymentProviderName\": \"<string>\",\n  \"paymentUserId\": \"<string>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.revelator.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "9390501b-df6d-43bf-97e0-adf167f93841",
+    "name": "Revelator Account Accounting API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for the Revelator music distribution and rights, royalties, and payments platform. Covers account/catalog management, distribution to DSPs, analytics and trends, royalty accounting and financial reporting, and payments / royalty-token (Web3 wallet) operations. Authentication uses an access token (Bearer) obtained from the partner login endpoints; tokens are valid for 8 hours and must be sent in the Authorization header.\n\nContact Support:\n Name: Revelator Support",
+      "type": "text/plain"
+    }
+  }
+}

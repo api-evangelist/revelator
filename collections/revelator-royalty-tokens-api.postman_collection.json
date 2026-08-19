@@ -1,0 +1,321 @@
+{
+  "item": [
+    {
+      "id": "7cde9e37-84c7-491e-8983-40fbdc33e884",
+      "name": "Royalty Tokens",
+      "description": {
+        "content": "Minting and retrieving ERC1155 royalty tokens.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "93b23709-a305-493a-8b5d-de6f5cf5c254",
+          "name": "List royalty tokens.",
+          "request": {
+            "name": "List royalty tokens.",
+            "description": {
+              "content": "Retrieves all royalty tokens for the account, with pagination, filtering by status and date range, and search.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "royaltyTokens"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageNumber",
+                  "value": "<integer>"
+                }
+              ],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6cba4fab-fffb-4e1c-8349-ac2ca80baccd",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "royaltyTokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageNumber",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1be42653-4e89-480d-a698-5e1f61f897f3",
+          "name": "Mint a royalty token.",
+          "request": {
+            "name": "Mint a royalty token.",
+            "description": {
+              "content": "Mints a new ERC1155 royalty token for a track asset, with a total supply and a holder list (Web3 wallet addresses, friendly names, token balances) and an optional payout rate (1-100%, defaults to 100%). The enterprise smart-wallet address is automatically designated an Admin holder.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "royaltyTokens"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"assetType\": \"<string>\",\n  \"assetId\": \"<string>\",\n  \"totalSupply\": \"<integer>\",\n  \"smartContractStandard\": \"<string>\",\n  \"holders\": [\n    {\n      \"walletAddress\": \"<string>\",\n      \"friendlyName\": \"<string>\",\n      \"balance\": \"<integer>\"\n    },\n    {\n      \"walletAddress\": \"<string>\",\n      \"friendlyName\": \"<string>\",\n      \"balance\": \"<integer>\"\n    }\n  ],\n  \"payoutRate\": 100\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "cc41555d-cb30-43c1-aca2-4da3d4a60feb",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "royaltyTokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"assetType\": \"<string>\",\n  \"assetId\": \"<string>\",\n  \"totalSupply\": \"<integer>\",\n  \"smartContractStandard\": \"<string>\",\n  \"holders\": [\n    {\n      \"walletAddress\": \"<string>\",\n      \"friendlyName\": \"<string>\",\n      \"balance\": \"<integer>\"\n    },\n    {\n      \"walletAddress\": \"<string>\",\n      \"friendlyName\": \"<string>\",\n      \"balance\": \"<integer>\"\n    }\n  ],\n  \"payoutRate\": 100\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"tokenId\": \"string\",\n  \"assetId\": \"string\",\n  \"totalSupply\": 3255,\n  \"smartContractStandard\": \"string\",\n  \"status\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "eb3f207a-c79b-4dd4-abdc-9fffb629904d",
+          "name": "Retrieve a royalty token by id.",
+          "request": {
+            "name": "Retrieve a royalty token by id.",
+            "description": {},
+            "url": {
+              "path": [
+                "royaltyTokens",
+                ":tokenId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "tokenId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "89703cd8-c4c9-4636-9f34-a8c5d01991f0",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "royaltyTokens",
+                    ":tokenId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tokenId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"tokenId\": \"string\",\n  \"assetId\": \"string\",\n  \"totalSupply\": 4696,\n  \"smartContractStandard\": \"string\",\n  \"status\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.revelator.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "da167bd9-f5ad-43d3-bc07-b37f282b6081",
+    "name": "Revelator Account Royalty Tokens API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for the Revelator music distribution and rights, royalties, and payments platform. Covers account/catalog management, distribution to DSPs, analytics and trends, royalty accounting and financial reporting, and payments / royalty-token (Web3 wallet) operations. Authentication uses an access token (Bearer) obtained from the partner login endpoints; tokens are valid for 8 hours and must be sent in the Authorization header.\n\nContact Support:\n Name: Revelator Support",
+      "type": "text/plain"
+    }
+  }
+}

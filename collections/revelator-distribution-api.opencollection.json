@@ -1,0 +1,120 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Revelator Account Distribution API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Distribution",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Validate release metadata.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.revelator.com/distribution/release/:releaseId/validate",
+            "params": [
+              {
+                "name": "releaseId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Runs automated validation of release metadata, returning errors with severity levels (1 = blocking, 2 = warning)."
+        },
+        {
+          "info": {
+            "name": "Configure distribution / retail options.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.revelator.com/content/release/retail/save"
+          },
+          "docs": "Configures distribution settings including sale dates, times, timezones, monetization policies, territorial availability, and price tiers."
+        },
+        {
+          "info": {
+            "name": "Add a release to the distribution queue.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.revelator.com/distribution/release/addtoqueue",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a release to the distribution queue, specifying target DSP/store IDs for delivery."
+        },
+        {
+          "info": {
+            "name": "List releases with distribution statuses.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.revelator.com/distribution/release/all",
+            "params": [
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageNumber",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of releases with distribution statuses per store, supporting filters by artist, label, date ranges, and status."
+        },
+        {
+          "info": {
+            "name": "Distribution status counts across stores.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.revelator.com/distribution/store/all",
+            "params": [
+              {
+                "name": "releaseId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns distribution status counts across DSPs; includes detailed per-store status when the releaseId parameter is provided."
+        },
+        {
+          "info": {
+            "name": "Take a release down from stores.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.revelator.com/distribution/release/takedown"
+          },
+          "docs": "Removes a release from one or more specified stores."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

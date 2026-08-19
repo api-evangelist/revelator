@@ -1,0 +1,208 @@
+{
+  "item": [
+    {
+      "id": "b5035be5-90d1-46bf-a94b-c89218f1abbd",
+      "name": "Integrations",
+      "description": {
+        "content": "Payment-provider (Tipalti) integration.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "02fc81eb-f02a-49d0-819b-711928b28a76",
+          "name": "Update the payment method for a payee.",
+          "request": {
+            "name": "Update the payment method for a payee.",
+            "description": {
+              "content": "Updates the payment method for a payee within the Revelator system (paymentProviderId, paymentProviderName, paymentUserId).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "accounting",
+                "payee",
+                "save"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"payeeId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"paymentProviderId\": \"<string>\",\n  \"paymentProviderName\": \"<string>\",\n  \"paymentUserId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ffacae47-8ec5-45fc-ba9e-8c08b408ed4c",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounting",
+                    "payee",
+                    "save"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payeeId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"paymentProviderId\": \"<string>\",\n  \"paymentProviderName\": \"<string>\",\n  \"paymentUserId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "73d3faf1-b7ab-4f8b-b03a-5f6d8d75eb20",
+          "name": "Generate a Tipalti iFrame hashkey for payee setup.",
+          "request": {
+            "name": "Generate a Tipalti iFrame hashkey for payee setup.",
+            "description": {
+              "content": "Generates an iFrame hashkey used to embed the Tipalti payee payment-setup flow. Requires a payee user access token.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "integrations",
+                "tipalti",
+                "generateIframeHashkey"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8b94fc97-fcff-4001-b976-b54413cbd1ef",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "tipalti",
+                    "generateIframeHashkey"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.revelator.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "7db2defb-95e5-4f56-8ca0-eb2a3dea1f52",
+    "name": "Revelator Account Integrations API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for the Revelator music distribution and rights, royalties, and payments platform. Covers account/catalog management, distribution to DSPs, analytics and trends, royalty accounting and financial reporting, and payments / royalty-token (Web3 wallet) operations. Authentication uses an access token (Bearer) obtained from the partner login endpoints; tokens are valid for 8 hours and must be sent in the Authorization header.\n\nContact Support:\n Name: Revelator Support",
+      "type": "text/plain"
+    }
+  }
+}

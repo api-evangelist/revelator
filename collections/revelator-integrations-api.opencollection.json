@@ -1,0 +1,50 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Revelator Account Integrations API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Integrations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Update the payment method for a payee.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.revelator.com/accounting/payee/save",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the payment method for a payee within the Revelator system (paymentProviderId, paymentProviderName, paymentUserId)."
+        },
+        {
+          "info": {
+            "name": "Generate a Tipalti iFrame hashkey for payee setup.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.revelator.com/integrations/tipalti/generateIframeHashkey"
+          },
+          "docs": "Generates an iFrame hashkey used to embed the Tipalti payee payment-setup flow. Requires a payee user access token."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

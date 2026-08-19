@@ -1,0 +1,224 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Revelator Account Analytics API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Analytics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Aggregated analytics by data set and dimension.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.revelator.com/analytics/:dataSet/:aggregationDimension",
+            "params": [
+              {
+                "name": "dataSet",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "aggregationDimension",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "dateGranularity",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "fromDate",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "toDate",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageNumber",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieves aggregated analytics data (e.g. revenue) grouped by a dimension such as byCountry, byTrack, byRelease, byArtist, byLabel, byDistributor, byDeliveryType, byFormat, byYouTubeChannel, or byYouTubeVideo."
+        },
+        {
+          "info": {
+            "name": "Monthly revenue metrics with pre-calculated enterprise-level values.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.revelator.com/analytics/revenue/metricsByDate",
+            "params": [
+              {
+                "name": "fromDate",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "toDate",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "metrics",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "targetEnterpriseId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Monthly revenue metrics with pre-calculated enterprise-level values."
+        },
+        {
+          "info": {
+            "name": "V3 consumption and engagement analytics by dimension.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.revelator.com/analytics/:metric/:aggregation",
+            "params": [
+              {
+                "name": "metric",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "aggregation",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "fromDate",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "toDate",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "dateGranularity",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageNumber",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Provides consumption and engagement metrics aggregated by various dimensions (byArtist, byCountry, byDate, byRelease, byTrack, byDistributor, byLabel, byDeliveryType, byDiscoveryType, byRecordingVersion, bySourceOfStream)."
+        },
+        {
+          "info": {
+            "name": "Artificial / fraudulent streaming detection by dimension.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.revelator.com/analytics/artificialStreams/:aggregation",
+            "params": [
+              {
+                "name": "aggregation",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "fromDate",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "toDate",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageNumber",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Artificial / fraudulent streaming detection by dimension."
+        },
+        {
+          "info": {
+            "name": "Playlist-driven performance metrics.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.revelator.com/analytics/playlists/byMetadata",
+            "params": [
+              {
+                "name": "metric",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "metadata",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "fromDate",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "toDate",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieves playlist performance such as streams from playlists, reach, followers, and coverage."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -166,6 +166,8 @@ apis:
   humanURL: https://api-docs.revelator.com/en/distribution/
   baseURL: https://api.revelator.com
   tags:
+  - Integration
+  tags_raw:
   - Integrations
   properties:
   - type: OpenAPI

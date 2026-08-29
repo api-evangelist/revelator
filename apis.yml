@@ -303,6 +303,9 @@ apis:
   - type: APIReference
     url: https://api-docs.revelator.com/en/royalty-tokens/
 common:
+- type: CapabilityMap
+  url: capabilities/revelator-capability-edges.yml
+  name: Revelator Business Capability Map
 - type: AgenticAccess
   url: agentic-access/revelator-agentic-access.yml
 - type: DomainSecurity

@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Revelator Account Integrations API
+  title: Revelator Integrations API
   description: REST API for the Revelator music distribution and rights, royalties, and payments platform. Covers account/catalog management, distribution to DSPs, analytics and trends, royalty accounting and financial reporting, and payments / royalty-token (Web3 wallet) operations. Authentication uses an access token (Bearer) obtained from the partner login endpoints; tokens are valid for 8 hours and must be sent in the Authorization header.
   termsOfService: https://www.revelator.com/terms
   contact:
@@ -21,7 +21,7 @@ paths:
       operationId: savePayee
       tags:
       - Integrations
-      summary: Update the payment method for a payee.
+      summary: Update the payment method for a payee
       description: Updates the payment method for a payee within the Revelator system (paymentProviderId, paymentProviderName, paymentUserId).
       requestBody:
         required: true
@@ -37,7 +37,7 @@ paths:
       operationId: generateTipaltiIframeHashkey
       tags:
       - Integrations
-      summary: Generate a Tipalti iFrame hashkey for payee setup.
+      summary: Generate a Tipalti iFrame hashkey for payee setup
       description: Generates an iFrame hashkey used to embed the Tipalti payee payment-setup flow. Requires a payee user access token.
       responses:
         '200':

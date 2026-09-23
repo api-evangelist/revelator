@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Revelator Account Accounting API
+  title: Revelator Accounting API
   description: REST API for the Revelator music distribution and rights, royalties, and payments platform. Covers account/catalog management, distribution to DSPs, analytics and trends, royalty accounting and financial reporting, and payments / royalty-token (Web3 wallet) operations. Authentication uses an access token (Bearer) obtained from the partner login endpoints; tokens are valid for 8 hours and must be sent in the Authorization header.
   termsOfService: https://www.revelator.com/terms
   contact:
@@ -21,7 +21,7 @@ paths:
       operationId: saveContract
       tags:
       - Accounting
-      summary: Create or update a rights contract.
+      summary: Create or update a rights contract
       description: Creates or modifies a contract (account, label, artist, release, or track level) with full payee and licensor configuration. Requires a parent account access token. The API does not support partial updates - the full object must be submitted.
       requestBody:
         required: true
@@ -37,7 +37,7 @@ paths:
       operationId: getContracts
       tags:
       - Accounting
-      summary: List contracts.
+      summary: List contracts
       description: Retrieves a paginated list of contracts with filtering, sorting, and search.
       parameters:
       - $ref: '#/components/parameters/pageSize'
@@ -50,7 +50,7 @@ paths:
       operationId: getContract
       tags:
       - Accounting
-      summary: Retrieve a contract by id.
+      summary: Retrieve a contract by id
       parameters:
       - name: contractId
         in: path
@@ -69,7 +69,7 @@ paths:
       operationId: getPayee
       tags:
       - Accounting
-      summary: Retrieve payee information.
+      summary: Retrieve payee information
       parameters:
       - name: payeeId
         in: path

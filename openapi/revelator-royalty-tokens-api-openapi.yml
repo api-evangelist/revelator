@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Revelator Account Royalty Tokens API
+  title: Revelator Royalty Tokens API
   description: REST API for the Revelator music distribution and rights, royalties, and payments platform. Covers account/catalog management, distribution to DSPs, analytics and trends, royalty accounting and financial reporting, and payments / royalty-token (Web3 wallet) operations. Authentication uses an access token (Bearer) obtained from the partner login endpoints; tokens are valid for 8 hours and must be sent in the Authorization header.
   termsOfService: https://www.revelator.com/terms
   contact:
@@ -21,7 +21,7 @@ paths:
       operationId: getRoyaltyTokens
       tags:
       - Royalty Tokens
-      summary: List royalty tokens.
+      summary: List royalty tokens
       description: Retrieves all royalty tokens for the account, with pagination, filtering by status and date range, and search.
       parameters:
       - $ref: '#/components/parameters/pageSize'
@@ -33,7 +33,7 @@ paths:
       operationId: mintRoyaltyToken
       tags:
       - Royalty Tokens
-      summary: Mint a royalty token.
+      summary: Mint a royalty token
       description: Mints a new ERC1155 royalty token for a track asset, with a total supply and a holder list (Web3 wallet addresses, friendly names, token balances) and an optional payout rate (1-100%, defaults to 100%). The enterprise smart-wallet address is automatically designated an Admin holder.
       requestBody:
         required: true
@@ -53,7 +53,7 @@ paths:
       operationId: getRoyaltyToken
       tags:
       - Royalty Tokens
-      summary: Retrieve a royalty token by id.
+      summary: Retrieve a royalty token by id
       parameters:
       - name: tokenId
         in: path
@@ -69,23 +69,6 @@ paths:
                 $ref: '#/components/schemas/RoyaltyToken'
 components:
   schemas:
-    RoyaltyToken:
-      type: object
-      properties:
-        tokenId:
-          type: string
-        assetId:
-          type: string
-        totalSupply:
-          type: integer
-        smartContractStandard:
-          type: string
-        status:
-          type: string
-        holders:
-          type: array
-          items:
-            type: object
     RoyaltyTokenMintRequest:
       type: object
       properties:
@@ -123,6 +106,23 @@ components:
       - totalSupply
       - smartContractStandard
       - holders
+    RoyaltyToken:
+      type: object
+      properties:
+        tokenId:
+          type: string
+        assetId:
+          type: string
+        totalSupply:
+          type: integer
+        smartContractStandard:
+          type: string
+        status:
+          type: string
+        holders:
+          type: array
+          items:
+            type: object
   parameters:
     pageNumber:
       name: pageNumber

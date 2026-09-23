@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Revelator Account Analytics API
+  title: Revelator Analytics API
   description: REST API for the Revelator music distribution and rights, royalties, and payments platform. Covers account/catalog management, distribution to DSPs, analytics and trends, royalty accounting and financial reporting, and payments / royalty-token (Web3 wallet) operations. Authentication uses an access token (Bearer) obtained from the partner login endpoints; tokens are valid for 8 hours and must be sent in the Authorization header.
   termsOfService: https://www.revelator.com/terms
   contact:
@@ -21,7 +21,7 @@ paths:
       operationId: getAnalytics
       tags:
       - Analytics
-      summary: Aggregated analytics by data set and dimension.
+      summary: Aggregated analytics by data set and dimension
       description: Retrieves aggregated analytics data (e.g. revenue) grouped by a dimension such as byCountry, byTrack, byRelease, byArtist, byLabel, byDistributor, byDeliveryType, byFormat, byYouTubeChannel, or byYouTubeVideo.
       parameters:
       - name: dataSet
@@ -58,7 +58,7 @@ paths:
       operationId: getRevenueMetricsByDate
       tags:
       - Analytics
-      summary: Monthly revenue metrics with pre-calculated enterprise-level values.
+      summary: Monthly revenue metrics with pre-calculated enterprise-level values
       parameters:
       - $ref: '#/components/parameters/fromDate'
       - $ref: '#/components/parameters/toDate'
@@ -84,7 +84,7 @@ paths:
       operationId: getConsumptionAnalytics
       tags:
       - Analytics
-      summary: V3 consumption and engagement analytics by dimension.
+      summary: V3 consumption and engagement analytics by dimension
       description: Provides consumption and engagement metrics aggregated by various dimensions (byArtist, byCountry, byDate, byRelease, byTrack, byDistributor, byLabel, byDeliveryType, byDiscoveryType, byRecordingVersion, bySourceOfStream).
       parameters:
       - name: metric
@@ -125,7 +125,7 @@ paths:
       operationId: getArtificialStreams
       tags:
       - Analytics
-      summary: Artificial / fraudulent streaming detection by dimension.
+      summary: Artificial / fraudulent streaming detection by dimension
       parameters:
       - name: aggregation
         in: path
@@ -145,7 +145,7 @@ paths:
       operationId: getPlaylistAnalytics
       tags:
       - Analytics
-      summary: Playlist-driven performance metrics.
+      summary: Playlist-driven performance metrics
       description: Retrieves playlist performance such as streams from playlists, reach, followers, and coverage.
       parameters:
       - name: metric
@@ -176,12 +176,6 @@ paths:
           description: OK
 components:
   parameters:
-    pageSize:
-      name: pageSize
-      in: query
-      required: false
-      schema:
-        type: integer
     fromDateRequired:
       name: fromDate
       in: query
@@ -189,8 +183,28 @@ components:
       schema:
         type: string
         format: date
+    toDateRequired:
+      name: toDate
+      in: query
+      required: true
+      schema:
+        type: string
+        format: date
+    pageSize:
+      name: pageSize
+      in: query
+      required: false
+      schema:
+        type: integer
     toDate:
       name: toDate
+      in: query
+      required: false
+      schema:
+        type: string
+        format: date
+    fromDate:
+      name: fromDate
       in: query
       required: false
       schema:
@@ -202,20 +216,6 @@ components:
       required: false
       schema:
         type: integer
-    toDateRequired:
-      name: toDate
-      in: query
-      required: true
-      schema:
-        type: string
-        format: date
-    fromDate:
-      name: fromDate
-      in: query
-      required: false
-      schema:
-        type: string
-        format: date
   securitySchemes:
     bearerAuth:
       type: http

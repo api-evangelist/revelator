@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Revelator Account Revenue API
+  title: Revelator Revenue API
   description: REST API for the Revelator music distribution and rights, royalties, and payments platform. Covers account/catalog management, distribution to DSPs, analytics and trends, royalty accounting and financial reporting, and payments / royalty-token (Web3 wallet) operations. Authentication uses an access token (Bearer) obtained from the partner login endpoints; tokens are valid for 8 hours and must be sent in the Authorization header.
   termsOfService: https://www.revelator.com/terms
   contact:
@@ -21,7 +21,7 @@ paths:
       operationId: getSaleReports
       tags:
       - Revenue
-      summary: List financial reports (user statements and sale reports).
+      summary: List financial reports (user statements and sale reports)
       description: Retrieves User Statements (system-generated during royalty runs) and Sale Reports (raw DSP imports). Supports filtering by date range, release id, track id, store id, payee id, processing status, and approval status.
       parameters:
       - $ref: '#/components/parameters/fromDate'
@@ -36,7 +36,7 @@ paths:
       operationId: getSaleReport
       tags:
       - Revenue
-      summary: Retrieve a single statement.
+      summary: Retrieve a single statement
       description: Retrieves a single statement. The statement id uses the format {statementTypeId}|{statementId}.
       parameters:
       - name: statementId
@@ -52,7 +52,7 @@ paths:
       operationId: downloadStatementSummary
       tags:
       - Revenue
-      summary: Download a user-statement summary (HTML).
+      summary: Download a user-statement summary (HTML)
       description: 'Deprecated: effective June 19, 2026 this endpoint will be removed.'
       deprecated: true
       responses:
@@ -67,7 +67,7 @@ paths:
       operationId: downloadStatementDetails
       tags:
       - Revenue
-      summary: Download user-statement details (CSV).
+      summary: Download user-statement details (CSV)
       responses:
         '200':
           description: CSV file.
@@ -80,7 +80,7 @@ paths:
       operationId: postDownloadSaleReports
       tags:
       - Revenue
-      summary: Download one or more sale reports as a ZIP archive.
+      summary: Download one or more sale reports as a ZIP archive
       description: Accepts a JSON array of statement ids and returns a compressed ZIP archive.
       requestBody:
         required: true

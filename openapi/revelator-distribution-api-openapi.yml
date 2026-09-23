@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Revelator Account Distribution API
+  title: Revelator Distribution API
   description: REST API for the Revelator music distribution and rights, royalties, and payments platform. Covers account/catalog management, distribution to DSPs, analytics and trends, royalty accounting and financial reporting, and payments / royalty-token (Web3 wallet) operations. Authentication uses an access token (Bearer) obtained from the partner login endpoints; tokens are valid for 8 hours and must be sent in the Authorization header.
   termsOfService: https://www.revelator.com/terms
   contact:
@@ -21,7 +21,7 @@ paths:
       operationId: validateRelease
       tags:
       - Distribution
-      summary: Validate release metadata.
+      summary: Validate release metadata
       description: Runs automated validation of release metadata, returning errors with severity levels (1 = blocking, 2 = warning).
       parameters:
       - name: releaseId
@@ -41,7 +41,7 @@ paths:
       operationId: saveRetailDistributionOptions
       tags:
       - Distribution
-      summary: Configure distribution / retail options.
+      summary: Configure distribution / retail options
       description: Configures distribution settings including sale dates, times, timezones, monetization policies, territorial availability, and price tiers.
       responses:
         '200':
@@ -51,7 +51,7 @@ paths:
       operationId: addReleaseToQueue
       tags:
       - Distribution
-      summary: Add a release to the distribution queue.
+      summary: Add a release to the distribution queue
       description: Adds a release to the distribution queue, specifying target DSP/store IDs for delivery.
       requestBody:
         required: true
@@ -67,7 +67,7 @@ paths:
       operationId: getAllReleaseDistributionStatus
       tags:
       - Distribution
-      summary: List releases with distribution statuses.
+      summary: List releases with distribution statuses
       description: Retrieves a paginated list of releases with distribution statuses per store, supporting filters by artist, label, date ranges, and status.
       parameters:
       - $ref: '#/components/parameters/pageSize'
@@ -80,7 +80,7 @@ paths:
       operationId: getStoreDistributionStatus
       tags:
       - Distribution
-      summary: Distribution status counts across stores.
+      summary: Distribution status counts across stores
       description: Returns distribution status counts across DSPs; includes detailed per-store status when the releaseId parameter is provided.
       parameters:
       - name: releaseId
@@ -96,7 +96,7 @@ paths:
       operationId: takedownRelease
       tags:
       - Distribution
-      summary: Take a release down from stores.
+      summary: Take a release down from stores
       description: Removes a release from one or more specified stores.
       responses:
         '200':

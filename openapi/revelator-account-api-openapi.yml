@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Revelator Account API
   description: REST API for the Revelator music distribution and rights, royalties, and payments platform. Covers account/catalog management, distribution to DSPs, analytics and trends, royalty accounting and financial reporting, and payments / royalty-token (Web3 wallet) operations. Authentication uses an access token (Bearer) obtained from the partner login endpoints; tokens are valid for 8 hours and must be sent in the Authorization header.
@@ -21,7 +21,7 @@ paths:
       operationId: partnerAccountSignup
       tags:
       - Account
-      summary: Create a new child account and user.
+      summary: Create a new child account and user
       description: Creates a new child (enterprise) account and user under the partner. Authenticated with the partner API key.
       requestBody:
         required: true
@@ -41,7 +41,7 @@ paths:
       operationId: partnerAccountLogin
       tags:
       - Account
-      summary: Authenticate a user and obtain an access token.
+      summary: Authenticate a user and obtain an access token
       description: Prompted login uses username/password plus partnerApiKey; unprompted login uses partnerUserId plus partnerApiKey. Returns an access token valid for 8 hours.
       requestBody:
         required: true
@@ -61,7 +61,7 @@ paths:
       operationId: partnerAccountUpgrade
       tags:
       - Account
-      summary: Upgrade an account type or settings.
+      summary: Upgrade an account type or settings
       responses:
         '200':
           description: OK
@@ -70,7 +70,7 @@ paths:
       operationId: accountLoginAs
       tags:
       - Account
-      summary: Switch authentication context to a different enterprise.
+      summary: Switch authentication context to a different enterprise
       responses:
         '200':
           description: OK
@@ -83,7 +83,7 @@ paths:
       operationId: getAccountPermissions
       tags:
       - Account
-      summary: Retrieve the list of accessible accounts.
+      summary: Retrieve the list of accessible accounts
       responses:
         '200':
           description: OK
@@ -92,7 +92,7 @@ paths:
       operationId: getEnterpriseClients
       tags:
       - Account
-      summary: Retrieve client information for an enterprise.
+      summary: Retrieve client information for an enterprise
       parameters:
       - name: enterpriseId
         in: path
@@ -104,16 +104,6 @@ paths:
           description: OK
 components:
   schemas:
-    AuthToken:
-      type: object
-      properties:
-        access_token:
-          type: string
-        enterpriseId:
-          type: string
-        expiresIn:
-          type: integer
-          description: Token lifetime in seconds (8 hours).
     LoginRequest:
       type: object
       properties:
@@ -141,6 +131,16 @@ components:
           type: string
       required:
       - partnerApiKey
+    AuthToken:
+      type: object
+      properties:
+        access_token:
+          type: string
+        enterpriseId:
+          type: string
+        expiresIn:
+          type: integer
+          description: Token lifetime in seconds (8 hours).
   securitySchemes:
     bearerAuth:
       type: http

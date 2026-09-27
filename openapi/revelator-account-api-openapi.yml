@@ -104,6 +104,27 @@ paths:
           description: OK
 components:
   schemas:
+    AuthToken:
+      type: object
+      properties:
+        access_token:
+          type: string
+        enterpriseId:
+          type: string
+        expiresIn:
+          type: integer
+          description: Token lifetime in seconds (8 hours).
+    SignupRequest:
+      type: object
+      properties:
+        partnerApiKey:
+          type: string
+        email:
+          type: string
+        name:
+          type: string
+      required:
+      - partnerApiKey
     LoginRequest:
       type: object
       properties:
@@ -120,27 +141,6 @@ components:
           type: string
       required:
       - partnerApiKey
-    SignupRequest:
-      type: object
-      properties:
-        partnerApiKey:
-          type: string
-        email:
-          type: string
-        name:
-          type: string
-      required:
-      - partnerApiKey
-    AuthToken:
-      type: object
-      properties:
-        access_token:
-          type: string
-        enterpriseId:
-          type: string
-        expiresIn:
-          type: integer
-          description: Token lifetime in seconds (8 hours).
   securitySchemes:
     bearerAuth:
       type: http

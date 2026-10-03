@@ -100,19 +100,6 @@ paths:
                 format: binary
 components:
   parameters:
-    pageSize:
-      name: pageSize
-      in: query
-      required: false
-      schema:
-        type: integer
-    toDate:
-      name: toDate
-      in: query
-      required: false
-      schema:
-        type: string
-        format: date
     fromDate:
       name: fromDate
       in: query
@@ -126,6 +113,19 @@ components:
       required: false
       schema:
         type: integer
+    pageSize:
+      name: pageSize
+      in: query
+      required: false
+      schema:
+        type: integer
+    toDate:
+      name: toDate
+      in: query
+      required: false
+      schema:
+        type: string
+        format: date
   securitySchemes:
     bearerAuth:
       type: http

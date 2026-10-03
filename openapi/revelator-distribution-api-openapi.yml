@@ -103,19 +103,31 @@ paths:
           description: OK
 components:
   parameters:
-    pageSize:
-      name: pageSize
-      in: query
-      required: false
-      schema:
-        type: integer
     pageNumber:
       name: pageNumber
       in: query
       required: false
       schema:
         type: integer
+    pageSize:
+      name: pageSize
+      in: query
+      required: false
+      schema:
+        type: integer
   schemas:
+    AddToQueueRequest:
+      type: object
+      properties:
+        releaseId:
+          type: string
+        storeIds:
+          type: array
+          items:
+            type: string
+      required:
+      - releaseId
+      - storeIds
     ValidationResult:
       type: object
       properties:
@@ -129,18 +141,6 @@ components:
               severity:
                 type: integer
                 description: 1 = blocking, 2 = warning.
-    AddToQueueRequest:
-      type: object
-      properties:
-        releaseId:
-          type: string
-        storeIds:
-          type: array
-          items:
-            type: string
-      required:
-      - releaseId
-      - storeIds
   securitySchemes:
     bearerAuth:
       type: http

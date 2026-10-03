@@ -183,6 +183,13 @@ components:
       schema:
         type: string
         format: date
+    toDateRequired:
+      name: toDate
+      in: query
+      required: true
+      schema:
+        type: string
+        format: date
     fromDateRequired:
       name: fromDate
       in: query
@@ -197,21 +204,14 @@ components:
       schema:
         type: string
         format: date
-    pageSize:
-      name: pageSize
+    pageNumber:
+      name: pageNumber
       in: query
       required: false
       schema:
         type: integer
-    toDateRequired:
-      name: toDate
-      in: query
-      required: true
-      schema:
-        type: string
-        format: date
-    pageNumber:
-      name: pageNumber
+    pageSize:
+      name: pageSize
       in: query
       required: false
       schema:

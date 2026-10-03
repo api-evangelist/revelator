@@ -114,17 +114,6 @@ components:
         expiresIn:
           type: integer
           description: Token lifetime in seconds (8 hours).
-    SignupRequest:
-      type: object
-      properties:
-        partnerApiKey:
-          type: string
-        email:
-          type: string
-        name:
-          type: string
-      required:
-      - partnerApiKey
     LoginRequest:
       type: object
       properties:
@@ -138,6 +127,17 @@ components:
           type: string
           description: Partner-side user id (unprompted login).
         partnerApiKey:
+          type: string
+      required:
+      - partnerApiKey
+    SignupRequest:
+      type: object
+      properties:
+        partnerApiKey:
+          type: string
+        email:
+          type: string
+        name:
           type: string
       required:
       - partnerApiKey

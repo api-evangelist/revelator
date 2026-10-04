@@ -124,14 +124,14 @@ components:
           items:
             type: object
   parameters:
-    pageNumber:
-      name: pageNumber
+    pageSize:
+      name: pageSize
       in: query
       required: false
       schema:
         type: integer
-    pageSize:
-      name: pageSize
+    pageNumber:
+      name: pageNumber
       in: query
       required: false
       schema:

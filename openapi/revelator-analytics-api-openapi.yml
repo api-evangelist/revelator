@@ -176,13 +176,6 @@ paths:
           description: OK
 components:
   parameters:
-    toDate:
-      name: toDate
-      in: query
-      required: false
-      schema:
-        type: string
-        format: date
     toDateRequired:
       name: toDate
       in: query
@@ -204,18 +197,25 @@ components:
       schema:
         type: string
         format: date
-    pageNumber:
-      name: pageNumber
-      in: query
-      required: false
-      schema:
-        type: integer
     pageSize:
       name: pageSize
       in: query
       required: false
       schema:
         type: integer
+    pageNumber:
+      name: pageNumber
+      in: query
+      required: false
+      schema:
+        type: integer
+    toDate:
+      name: toDate
+      in: query
+      required: false
+      schema:
+        type: string
+        format: date
   securitySchemes:
     bearerAuth:
       type: http

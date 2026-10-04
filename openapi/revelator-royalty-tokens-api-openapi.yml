@@ -69,23 +69,6 @@ paths:
                 $ref: '#/components/schemas/RoyaltyToken'
 components:
   schemas:
-    RoyaltyToken:
-      type: object
-      properties:
-        tokenId:
-          type: string
-        assetId:
-          type: string
-        totalSupply:
-          type: integer
-        smartContractStandard:
-          type: string
-        status:
-          type: string
-        holders:
-          type: array
-          items:
-            type: object
     RoyaltyTokenMintRequest:
       type: object
       properties:
@@ -123,15 +106,32 @@ components:
       - totalSupply
       - smartContractStandard
       - holders
+    RoyaltyToken:
+      type: object
+      properties:
+        tokenId:
+          type: string
+        assetId:
+          type: string
+        totalSupply:
+          type: integer
+        smartContractStandard:
+          type: string
+        status:
+          type: string
+        holders:
+          type: array
+          items:
+            type: object
   parameters:
-    pageNumber:
-      name: pageNumber
+    pageSize:
+      name: pageSize
       in: query
       required: false
       schema:
         type: integer
-    pageSize:
-      name: pageSize
+    pageNumber:
+      name: pageNumber
       in: query
       required: false
       schema:

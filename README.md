@@ -1,4 +1,4 @@
-# Revelator (revelator)
+# Revelator
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,143 +66,129 @@
 
 Revelator is a music distribution and rights, royalties, and payments infrastructure platform for labels, distributors, and music businesses. Its REST API exposes the digital supply chain - distribution, catalog, analytics and trends, royalty accounting, and payments - behind a single OAuth2 Bearer-token interface using a child-account model.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/revelator/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/revelator/refs/heads/main/apis.yml)
+**Areas:** Music · Distribution · Rights · Royalties · Payments · Analytics
 
-## Tags
+## Revelator on APIs.io
 
-- Music
-- Distribution
-- Rights
-- Royalties
-- Payments
-- Analytics
+Everything profiled for Revelator is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/revelator/](https://apis.io/providers/revelator/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (8)
 
-- **Created:** 2026-06-21
-- **Modified:** 2026-06-21
+- [Revelator Account API](https://apis.io/apis/revelator/revelator-account-api/) — Partner account signup, login, switching, and permissions.
+- [Revelator Accounting API](https://apis.io/apis/revelator/revelator-accounting-api/) — Rights contracts and payee management.
+- [Revelator Analytics API](https://apis.io/apis/revelator/revelator-analytics-api/) — Revenue, consumption, engagement, playlist, and artificial-streaming analytics.
+- [Revelator Distribution API](https://apis.io/apis/revelator/revelator-distribution-api/) — Release validation, distribution options, queueing, status, takedown.
+- [Revelator Integrations API](https://apis.io/apis/revelator/revelator-integrations-api/) — Payment-provider (Tipalti) integration.
+- [Revelator Lookup API](https://apis.io/apis/revelator/revelator-lookup-api/) — Common reference/lookup data.
+- [Revelator Revenue API](https://apis.io/apis/revelator/revelator-revenue-api/) — Financial sale reports and user statements.
+- [Revelator Royalty Tokens API](https://apis.io/apis/revelator/revelator-royalty-tokens-api/) — Minting and retrieving ERC1155 royalty tokens.
 
-## APIs
+### Published properties
 
-### Revelator Distribution API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-Validates release metadata, configures retail/distribution options, queues releases for delivery to DSPs/stores, retrieves per-store distribution status, and processes takedowns.
+#### Agentic access (1)
 
-- **Human URL:** [https://api-docs.revelator.com/en/distribution/](https://api-docs.revelator.com/en/distribution/)
-- **Base URL:** `https://api.revelator.com`
+Which operations an agent can call, which act, and which need a human in the loop.
 
-#### Tags
+- [Revelator Agentic Access](https://apis.io/agentic-access/revelator/revelator-agentic-access/)
 
-- Distribution
-- Releases
-- DSP
-- Delivery
+#### Collections (9)
 
-#### Properties
+Postman and Open Collection request collections.
 
-- [Documentation](https://api-docs.revelator.com/en/distribution/)
-- [API Reference](https://api-docs.revelator.com/en/distribution/)
-- [OpenAPI](openapi/revelator-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/revelator.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/revelator.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Revelator API](https://apis.io/collections/revelator/open-revelator/)
+- [Revelator Account API](https://apis.io/collections/revelator/open-revelator-account-api/)
+- [Revelator Account Accounting API](https://apis.io/collections/revelator/open-revelator-accounting-api/)
+- [Revelator Account Analytics API](https://apis.io/collections/revelator/open-revelator-analytics-api/)
+- [Revelator Account Distribution API](https://apis.io/collections/revelator/open-revelator-distribution-api/)
+- [Revelator Account Integrations API](https://apis.io/collections/revelator/open-revelator-integrations-api/)
+- [Revelator Account Lookup API](https://apis.io/collections/revelator/open-revelator-lookup-api/)
+- [Revelator Account Revenue API](https://apis.io/collections/revelator/open-revelator-revenue-api/)
+- [Revelator Account Royalty Tokens API](https://apis.io/collections/revelator/open-revelator-royalty-tokens-api/)
 
-### Revelator Catalog API
+#### Security (2)
 
-Manages enterprise accounts and their catalog of releases, tracks, and assets, including account signup/login, account switching, permissions, and common lookup data (currencies, countries, stores).
+Authentication, trust centre, and vulnerability disclosure.
 
-- **Human URL:** [https://api-docs.revelator.com/en/getting-started](https://api-docs.revelator.com/en/getting-started)
-- **Base URL:** `https://api.revelator.com`
+- [Revelator Authentication](https://apis.io/security/revelator/revelator-authentication/)
+- [Revelator Domain Security](https://apis.io/security/revelator/revelator-domain-security/)
 
-#### Tags
+#### Plans and pricing (1)
 
-- Catalog
-- Releases
-- Tracks
-- Assets
+Published plans, tiers and prices.
 
-#### Properties
+- [Revelator Plans Pricing](https://apis.io/plans/revelator/revelator-plans-pricing/)
 
-- [Documentation](https://api-docs.revelator.com/en/getting-started)
-- [OpenAPI](openapi/revelator-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/revelator.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/revelator.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Rate limits (1)
 
-### Revelator Analytics API
+Published request limits.
 
-Aggregated revenue, consumption, and engagement analytics across many dimensions (artist, country, track, release, distributor, playlist), plus key metrics, playlist performance, and artificial-streaming detection.
+- [Revelator Rate Limits](https://apis.io/rate-limits/revelator/revelator-rate-limits/)
 
-- **Human URL:** [https://api-docs.revelator.com/en/analytics/](https://api-docs.revelator.com/en/analytics/)
-- **Base URL:** `https://api.revelator.com`
+#### FinOps (1)
 
-#### Tags
+What the API costs to run, by operation.
 
-- Analytics
-- Trends
-- Streams
-- Consumption
+- [Revelator Finops](https://apis.io/finops/revelator/revelator-finops/)
 
-#### Properties
+## Where to find this API
 
-- [Documentation](https://api-docs.revelator.com/en/analytics/)
-- [API Reference](https://api-docs.revelator.com/en/analytics/)
-- [OpenAPI](openapi/revelator-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/revelator.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/revelator.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-### Revelator Royalties & Accounting API
-
-Manages rights contracts, payees, and licensors, and retrieves financial sale reports and user statements (royalty runs and raw DSP imports) with summary and detail downloads.
-
-- **Human URL:** [https://api-docs.revelator.com/en/rights/](https://api-docs.revelator.com/en/rights/)
-- **Base URL:** `https://api.revelator.com`
-
-#### Tags
-
-- Royalties
-- Accounting
-- Contracts
-- Revenue
-
-#### Properties
-
-- [Documentation](https://api-docs.revelator.com/en/rights/)
-- [API Reference](https://api-docs.revelator.com/en/revenue/)
-- [OpenAPI](openapi/revelator-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/revelator.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/revelator.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Revelator Payments & Wallet API
-
-Configures payee payment methods via Tipalti, and mints, lists, and retrieves ERC1155 royalty tokens backed by track assets with Web3 smart-wallet holders for on-chain royalty distribution.
-
-- **Human URL:** [https://api-docs.revelator.com/en/royalty-tokens/](https://api-docs.revelator.com/en/royalty-tokens/)
-- **Base URL:** `https://api.revelator.com`
-
-#### Tags
-
-- Payments
-- Wallet
-- Payouts
-- Royalty Tokens
-
-#### Properties
-
-- [Documentation](https://api-docs.revelator.com/en/integrations/)
-- [API Reference](https://api-docs.revelator.com/en/royalty-tokens/)
-- [OpenAPI](openapi/revelator-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/revelator.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/revelator.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-## Common Properties
-
-- [LinkedIn](https://www.linkedin.com/company/revelator)
 - [Website](https://www.revelator.com)
 - [Documentation](https://api-docs.revelator.com)
-- [Plans](plans/revelator-plans-pricing.yml)
-- [Rate Limits](rate-limits/revelator-rate-limits.yml)
-- [Fin Ops](finops/revelator-finops.yml)
+- [Blog](https://www.revelator.com/blog)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 27.3** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 45.9 |
+| Contract governance | 0.0 |
+| Operational transparency | 7.9 |
+| Developer ergonomics | 32.1 |
+| Access clarity | 7.9 |
+
+**Agent readiness 17.9** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 10.7** — Payments
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/revelator/](https://apis.io/providers/revelator/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Revelator: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/revelator/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
